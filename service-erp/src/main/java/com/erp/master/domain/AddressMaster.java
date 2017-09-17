@@ -1,4 +1,4 @@
-package com.erp.domain;
+package com.erp.master.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -6,26 +6,28 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the company_master database table.
+ * The persistent class for the address_master database table.
  * 
  */
 @Entity
-@Table(name="company_master")
-public class CompanyMaster implements Serializable {
+@Table(name="address_master")
+public class AddressMaster implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	private String id;
 
 	@Column(name="account_id")
 	private Long accountId;
 
-	@Column(name="company_code")
-	private String companyCode;
+	private String address;
 
-	@Column(name="company_name")
-	private String companyName;
+	@Column(name="city_id")
+	private Long cityId;
+
+	@Column(name="country_id")
+	private Long countryId;
 
 	@Column(name="created_by")
 	private Long createdBy;
@@ -44,11 +46,19 @@ public class CompanyMaster implements Serializable {
 	@Column(name="modified_date")
 	private Date modifiedDate;
 
-	public Long getId() {
+	private String pincode;
+
+	@Column(name="state_id")
+	private Long stateId;
+
+	public AddressMaster() {
+	}
+
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -60,20 +70,28 @@ public class CompanyMaster implements Serializable {
 		this.accountId = accountId;
 	}
 
-	public String getCompanyCode() {
-		return companyCode;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setCompanyCode(String companyCode) {
-		this.companyCode = companyCode;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
-	public String getCompanyName() {
-		return companyName;
+	public Long getCityId() {
+		return cityId;
 	}
 
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
+	public void setCityId(Long cityId) {
+		this.cityId = cityId;
+	}
+
+	public Long getCountryId() {
+		return countryId;
+	}
+
+	public void setCountryId(Long countryId) {
+		this.countryId = countryId;
 	}
 
 	public Long getCreatedBy() {
@@ -114,6 +132,22 @@ public class CompanyMaster implements Serializable {
 
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
+	}
+
+	public String getPincode() {
+		return pincode;
+	}
+
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
+	}
+
+	public Long getStateId() {
+		return stateId;
+	}
+
+	public void setStateId(Long stateId) {
+		this.stateId = stateId;
 	}
 
 	

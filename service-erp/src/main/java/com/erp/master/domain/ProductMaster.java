@@ -1,4 +1,4 @@
-package com.erp.domain;
+package com.erp.master.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

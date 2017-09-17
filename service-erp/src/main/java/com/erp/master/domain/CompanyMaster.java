@@ -1,4 +1,4 @@
-package com.erp.domain;
+package com.erp.master.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -6,17 +6,26 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the route_master database table.
+ * The persistent class for the company_master database table.
  * 
  */
 @Entity
-@Table(name="route_master")
-public class RouteMaster implements Serializable {
+@Table(name="company_master")
+public class CompanyMaster implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+
+	@Column(name="account_id")
+	private Long accountId;
+
+	@Column(name="company_code")
+	private String companyCode;
+
+	@Column(name="company_name")
+	private String companyName;
 
 	@Column(name="created_by")
 	private Long createdBy;
@@ -35,15 +44,36 @@ public class RouteMaster implements Serializable {
 	@Column(name="modified_date")
 	private Date modifiedDate;
 
-	@Column(name="route_name")
-	private String routeName;
-
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
+	}
+
+	public String getCompanyCode() {
+		return companyCode;
+	}
+
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 
 	public Long getCreatedBy() {
@@ -84,14 +114,6 @@ public class RouteMaster implements Serializable {
 
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
-	}
-
-	public String getRouteName() {
-		return routeName;
-	}
-
-	public void setRouteName(String routeName) {
-		this.routeName = routeName;
 	}
 
 	

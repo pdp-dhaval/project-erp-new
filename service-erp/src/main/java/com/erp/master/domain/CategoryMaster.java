@@ -1,4 +1,4 @@
-package com.erp.domain;
+package com.erp.master.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -6,20 +6,21 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the customer_master database table.
+ * The persistent class for the category_master database table.
  * 
  */
 @Entity
-@Table(name="customer_master")
-public class CustomerMaster implements Serializable {
+@Table(name="category_master")
+@NamedQuery(name="CategoryMaster.findAll", query="SELECT c FROM CategoryMaster c")
+public class CategoryMaster implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name="account_id")
-	private Long accountId;
+	@Column(name="category_name")
+	private String categoryName;
 
 	@Column(name="created_by")
 	private Long createdBy;
@@ -27,9 +28,6 @@ public class CustomerMaster implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="created_date")
 	private Date createdDate;
-
-	@Column(name="customer_type")
-	private Integer customerType;
 
 	@Column(name="is_active")
 	private Boolean isActive;
@@ -41,9 +39,6 @@ public class CustomerMaster implements Serializable {
 	@Column(name="modified_date")
 	private Date modifiedDate;
 
-	@Column(name="route_id")
-	private Long routeId;
-
 	public Long getId() {
 		return id;
 	}
@@ -52,12 +47,12 @@ public class CustomerMaster implements Serializable {
 		this.id = id;
 	}
 
-	public Long getAccountId() {
-		return accountId;
+	public String getCategoryName() {
+		return categoryName;
 	}
 
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
 	public Long getCreatedBy() {
@@ -74,14 +69,6 @@ public class CustomerMaster implements Serializable {
 
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
-	}
-
-	public Integer getCustomerType() {
-		return customerType;
-	}
-
-	public void setCustomerType(Integer customerType) {
-		this.customerType = customerType;
 	}
 
 	public Boolean getIsActive() {
@@ -108,13 +95,6 @@ public class CustomerMaster implements Serializable {
 		this.modifiedDate = modifiedDate;
 	}
 
-	public Long getRouteId() {
-		return routeId;
-	}
-
-	public void setRouteId(Long routeId) {
-		this.routeId = routeId;
-	}
-
+	
 	
 }

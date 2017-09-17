@@ -9,7 +9,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @ComponentScan(basePackages = { "com.erp" })
 @EnableAsync
 public class ErpMain {
-//hiren test
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(ErpMain.class, args);
 	}

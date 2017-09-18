@@ -5,6 +5,9 @@ import java.util.Collection;
 public class CommonUtils {
 
 	public static final Integer ACCOUNT_MASTER = 1;
+	
+	public static final String SOMETHING_WENT_WRONG = "Something went wrong";
+	public static final String DATA_SUCCESS = "Data Successfully Fetched";
 
 	public static boolean isListNullOrEmpty(Collection data) {
         return (data == null || data.isEmpty());

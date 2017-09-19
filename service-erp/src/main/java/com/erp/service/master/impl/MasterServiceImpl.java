@@ -1,5 +1,8 @@
 package com.erp.service.master.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -160,8 +163,8 @@ public class MasterServiceImpl implements MasterService{
 			// TODO: handle exception
 			
 			e.printStackTrace();
-			log.error("error while fetching list of master detail");
-			return new ErpResponse("Error while fetching list of master detail", HttpStatus.INTERNAL_SERVER_ERROR.value());
+			log.error("error while fetching master detail");
+			return new ErpResponse("Error while fetching master detail", HttpStatus.INTERNAL_SERVER_ERROR.value());
 		}
 		
 		return null;
@@ -170,6 +173,44 @@ public class MasterServiceImpl implements MasterService{
 	@Override
 	public ErpResponse list(Integer classId, Integer startNo, Integer endNo) {
 		// TODO Auto-generated method stub
+		
+		
+		try {
+			
+			switch (classId) {
+			case 1:
+			{
+				List<AccountMasterRequest> listOfAccountMasterRequest=new ArrayList<AccountMasterRequest>();
+				List<AccountMaster> listOfAccountMaster=new ArrayList<AccountMaster>();
+				if(startNo == -1 || endNo == -1)
+				{
+					listOfAccountMaster=accountMasterRepository.listAll();
+				}
+				else
+				{
+					//listOfAccountMaster=accountMasterRepository.listByStartNoAndEndNo(startNo,endNo);
+					listOfAccountMaster=accountMasterRepository.listAll();
+				}
+
+				for(AccountMaster accountMaster:listOfAccountMaster)
+				{
+					AccountMasterRequest accountMasterRequest=new AccountMasterRequest();
+					BeanUtils.copyProperties(accountMaster, accountMasterRequest);
+					listOfAccountMasterRequest.add(accountMasterRequest);
+				}
+				
+				ErpResponse res=new ErpResponse(CommonUtils.LIST_SUCCESSFULLY_FETCHED, HttpStatus.OK.value());
+				res.setDataList(listOfAccountMasterRequest);
+				return res; 
+			}
+			}
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			log.error("error while fetching list of master detail");
+			return new ErpResponse("Error while fetching list of master detail", HttpStatus.INTERNAL_SERVER_ERROR.value());
+		}
 		return null;
 	}
 

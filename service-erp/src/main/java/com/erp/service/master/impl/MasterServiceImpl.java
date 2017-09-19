@@ -190,7 +190,6 @@ public class MasterServiceImpl implements MasterService{
 				}
 				else
 				{
-					//listOfAccountMaster=accountMasterRepository.listBypageSizeAndEndNo(pageSize,endNo);
 					
 					listOfAccountMaster=accountMasterRepository.listByRange(pageable);
 				}
@@ -216,8 +215,7 @@ public class MasterServiceImpl implements MasterService{
 				}
 				else
 				{
-					//listOfAccountMaster=accountMasterRepository.listBypageSizeAndEndNo(pageSize,endNo);
-					listOfAddressMaster=addressMasterRepository.listAll();
+					listOfAddressMaster=addressMasterRepository.listByRange(pageable);
 				}
 
 				for(AddressMaster addressMaster:listOfAddressMaster)
@@ -241,8 +239,7 @@ public class MasterServiceImpl implements MasterService{
 				}
 				else
 				{
-					//listOfAccountMaster=accountMasterRepository.listBypageSizeAndEndNo(pageSize,endNo);
-					listOfCategoryMaster=categoryMasterRepository.listAll();
+					listOfCategoryMaster=categoryMasterRepository.listByRange(pageable);
 				}
 
 				for(CategoryMaster categoryMaster:listOfCategoryMaster)
@@ -266,8 +263,7 @@ public class MasterServiceImpl implements MasterService{
 				}
 				else
 				{
-					//listOfAccountMaster=accountMasterRepository.listBypageSizeAndEndNo(pageSize,endNo);
-					listOfCompanyMaster=companyMasterRepository.listAll();
+					listOfCompanyMaster=companyMasterRepository.listByRange(pageable);
 				}
 
 				for(CompanyMaster companyMaster:listOfCompanyMaster)
@@ -292,8 +288,7 @@ public class MasterServiceImpl implements MasterService{
 				}
 				else
 				{
-					//listOfAccountMaster=accountMasterRepository.listBypageSizeAndEndNo(pageSize,endNo);
-					listOfCustomerMaster=customerMasterRepository.listAll();
+					listOfCustomerMaster=customerMasterRepository.listByRange(pageable);
 				}
 
 				for(CustomerMaster customerMaster:listOfCustomerMaster)
@@ -318,8 +313,7 @@ public class MasterServiceImpl implements MasterService{
 				}
 				else
 				{
-					//listOfAccountMaster=accountMasterRepository.listBypageSizeAndEndNo(pageSize,endNo);
-					listOfProductMaster=productMasterRepository.listAll();
+					listOfProductMaster=productMasterRepository.listByRange(pageable);
 				}
 
 				for(ProductMaster productMaster:listOfProductMaster)
@@ -344,8 +338,7 @@ public class MasterServiceImpl implements MasterService{
 				}
 				else
 				{
-					//listOfAccountMaster=accountMasterRepository.listBypageSizeAndEndNo(pageSize,endNo);
-					listOfRouteMaster=routeMasterRepository.listAll();
+					listOfRouteMaster=routeMasterRepository.listByRange(pageable);
 				}
 
 				for(RouteMaster routeMaster:listOfRouteMaster)

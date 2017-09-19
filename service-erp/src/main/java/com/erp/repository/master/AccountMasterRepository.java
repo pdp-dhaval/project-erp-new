@@ -2,6 +2,7 @@ package com.erp.repository.master;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,5 +19,7 @@ public interface AccountMasterRepository extends JpaRepository<AccountMaster, Lo
 	@Query( "from AccountMaster am where isActive=true" )
 	List<AccountMaster> listAll();
 
-	//public List<AccountMaster> listByStartNoAndEndNo(Integer startNo, Integer endNo);
+	@Query( "from AccountMaster am where isActive=true" )
+	public List<AccountMaster> listByRange(Pageable pageable);
+	
 }

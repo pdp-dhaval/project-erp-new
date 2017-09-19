@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -171,10 +173,10 @@ public class MasterServiceImpl implements MasterService{
 	}
 
 	@Override
-	public ErpResponse list(Integer classId, Integer startNo, Integer endNo) {
+	public ErpResponse list(Integer classId, Integer pageSize, Integer  pageNo) {
 		// TODO Auto-generated method stub
 		
-		
+		Pageable pageable=new PageRequest(pageNo, pageSize);
 		try {
 			
 			switch (classId) {
@@ -182,14 +184,15 @@ public class MasterServiceImpl implements MasterService{
 			{
 				List<AccountMasterRequest> listOfAccountMasterRequest=new ArrayList<AccountMasterRequest>();
 				List<AccountMaster> listOfAccountMaster=new ArrayList<AccountMaster>();
-				if(startNo == -1 || endNo == -1)
+				if(pageSize == -1 || pageNo == -1)
 				{
 					listOfAccountMaster=accountMasterRepository.listAll();
 				}
 				else
 				{
-					//listOfAccountMaster=accountMasterRepository.listByStartNoAndEndNo(startNo,endNo);
-					listOfAccountMaster=accountMasterRepository.listAll();
+					//listOfAccountMaster=accountMasterRepository.listBypageSizeAndEndNo(pageSize,endNo);
+					
+					listOfAccountMaster=accountMasterRepository.listByRange(pageable);
 				}
 
 				for(AccountMaster accountMaster:listOfAccountMaster)
@@ -203,6 +206,163 @@ public class MasterServiceImpl implements MasterService{
 				res.setDataList(listOfAccountMasterRequest);
 				return res; 
 			}
+			case 2:
+			{
+				List<AddressMasterRequest> listOfAddressMasterRequest=new ArrayList<AddressMasterRequest>();
+				List<AddressMaster> listOfAddressMaster=new ArrayList<AddressMaster>();
+				if(pageSize == -1 || pageNo == -1)
+				{
+					listOfAddressMaster=addressMasterRepository.listAll();
+				}
+				else
+				{
+					//listOfAccountMaster=accountMasterRepository.listBypageSizeAndEndNo(pageSize,endNo);
+					listOfAddressMaster=addressMasterRepository.listAll();
+				}
+
+				for(AddressMaster addressMaster:listOfAddressMaster)
+				{
+					AddressMasterRequest addressMasterRequest=new AddressMasterRequest();
+					BeanUtils.copyProperties(addressMaster, addressMasterRequest);
+					listOfAddressMasterRequest.add(addressMasterRequest);
+				}
+				
+				ErpResponse res=new ErpResponse(CommonUtils.LIST_SUCCESSFULLY_FETCHED, HttpStatus.OK.value());
+				res.setDataList(listOfAddressMasterRequest);
+				return res; 
+			}
+			case 3:
+			{
+				List<CategoryMasterRequest> listOfCategoryMasterRequest=new ArrayList<CategoryMasterRequest>();
+				List<CategoryMaster> listOfCategoryMaster=new ArrayList<CategoryMaster>();
+				if(pageSize == -1 || pageNo == -1)
+				{
+					listOfCategoryMaster=categoryMasterRepository.listAll();
+				}
+				else
+				{
+					//listOfAccountMaster=accountMasterRepository.listBypageSizeAndEndNo(pageSize,endNo);
+					listOfCategoryMaster=categoryMasterRepository.listAll();
+				}
+
+				for(CategoryMaster categoryMaster:listOfCategoryMaster)
+				{
+					CategoryMasterRequest categoryMasterRequest=new CategoryMasterRequest();
+					BeanUtils.copyProperties(categoryMaster, categoryMasterRequest);
+					listOfCategoryMasterRequest.add(categoryMasterRequest);
+				}
+				
+				ErpResponse res=new ErpResponse(CommonUtils.LIST_SUCCESSFULLY_FETCHED, HttpStatus.OK.value());
+				res.setDataList(listOfCategoryMasterRequest);
+				return res; 
+			}
+			case 4:
+			{
+				List<CompanyMasterRequest> listOfCompanyMasterRequest=new ArrayList<CompanyMasterRequest>();
+				List<CompanyMaster> listOfCompanyMaster=new ArrayList<CompanyMaster>();
+				if(pageSize == -1 || pageNo== -1)
+				{
+					listOfCompanyMaster=companyMasterRepository.listAll();
+				}
+				else
+				{
+					//listOfAccountMaster=accountMasterRepository.listBypageSizeAndEndNo(pageSize,endNo);
+					listOfCompanyMaster=companyMasterRepository.listAll();
+				}
+
+				for(CompanyMaster companyMaster:listOfCompanyMaster)
+				{
+					CompanyMasterRequest companyMasterRequest=new CompanyMasterRequest();
+					BeanUtils.copyProperties(companyMaster, companyMasterRequest);
+					listOfCompanyMasterRequest.add(companyMasterRequest);
+				}
+				
+				ErpResponse res=new ErpResponse(CommonUtils.LIST_SUCCESSFULLY_FETCHED, HttpStatus.OK.value());
+				res.setDataList(listOfCompanyMasterRequest);
+				return res; 
+			}
+
+			case 5:
+			{
+				List<CustomerMasterRequest> listOfCustomerMasterRequest=new ArrayList<CustomerMasterRequest>();
+				List<CustomerMaster> listOfCustomerMaster=new ArrayList<CustomerMaster>();
+				if(pageSize == -1 || pageNo == -1)
+				{
+					listOfCustomerMaster=customerMasterRepository.listAll();
+				}
+				else
+				{
+					//listOfAccountMaster=accountMasterRepository.listBypageSizeAndEndNo(pageSize,endNo);
+					listOfCustomerMaster=customerMasterRepository.listAll();
+				}
+
+				for(CustomerMaster customerMaster:listOfCustomerMaster)
+				{
+					CustomerMasterRequest customerMasterRequest=new CustomerMasterRequest();
+					BeanUtils.copyProperties(customerMaster, customerMasterRequest);
+					listOfCustomerMasterRequest.add(customerMasterRequest);
+				}
+				
+				ErpResponse res=new ErpResponse(CommonUtils.LIST_SUCCESSFULLY_FETCHED, HttpStatus.OK.value());
+				res.setDataList(listOfCustomerMasterRequest);
+				return res; 
+			}
+			
+			case 6:
+			{
+				List<ProductMasterRequest> listOfProductMasterRequest=new ArrayList<ProductMasterRequest>();
+				List<ProductMaster> listOfProductMaster=new ArrayList<ProductMaster>();
+				if(pageSize == -1 || pageNo == -1)
+				{
+					listOfProductMaster=productMasterRepository.listAll();
+				}
+				else
+				{
+					//listOfAccountMaster=accountMasterRepository.listBypageSizeAndEndNo(pageSize,endNo);
+					listOfProductMaster=productMasterRepository.listAll();
+				}
+
+				for(ProductMaster productMaster:listOfProductMaster)
+				{
+					ProductMasterRequest productMasterRequest=new ProductMasterRequest();
+					BeanUtils.copyProperties(productMaster, productMasterRequest);
+					listOfProductMasterRequest.add(productMasterRequest);
+				}
+				
+				ErpResponse res=new ErpResponse(CommonUtils.LIST_SUCCESSFULLY_FETCHED, HttpStatus.OK.value());
+				res.setDataList(listOfProductMasterRequest);
+				return res; 
+			}
+
+			case 7:
+			{
+				List<RouteMasterRequest> listOfRouteMasterRequest=new ArrayList<RouteMasterRequest>();
+				List<RouteMaster> listOfRouteMaster=new ArrayList<RouteMaster>();
+				if(pageSize == -1 || pageNo== -1)
+				{
+					listOfRouteMaster=routeMasterRepository.listAll();
+				}
+				else
+				{
+					//listOfAccountMaster=accountMasterRepository.listBypageSizeAndEndNo(pageSize,endNo);
+					listOfRouteMaster=routeMasterRepository.listAll();
+				}
+
+				for(RouteMaster routeMaster:listOfRouteMaster)
+				{
+					RouteMasterRequest routeMasterRequest=new RouteMasterRequest();
+					BeanUtils.copyProperties(routeMaster, routeMasterRequest);
+					listOfRouteMasterRequest.add(routeMasterRequest);
+				}
+				
+				ErpResponse res=new ErpResponse(CommonUtils.LIST_SUCCESSFULLY_FETCHED, HttpStatus.OK.value());
+				res.setDataList(listOfRouteMasterRequest);
+				return res; 
+			}
+			
+
+			
+
 			}
 		}
 		catch (Exception e) {

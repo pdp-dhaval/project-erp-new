@@ -49,17 +49,17 @@ public class MasterController {
 	public ResponseEntity<ErpResponse> list(@RequestBody ErpRequest request) {
 		
 		Integer classId=request.getClassId();
-		Integer startNo=request.getStartNo();
-		Integer endNo=request.getEndNo();
+		Integer pageSize=request.getPageSize();
+		Integer pageNo=request.getPageNo();
 		
-		if(CommonUtils.isObjectNullOrEmpty(classId) || CommonUtils.isObjectNullOrEmpty(startNo) || CommonUtils.isObjectNullOrEmpty(endNo))
+		if(CommonUtils.isObjectNullOrEmpty(classId) || CommonUtils.isObjectNullOrEmpty(pageNo) || CommonUtils.isObjectNullOrEmpty(pageNo))
 		{
 			log.error("parameters are null or empty.");
 			ErpResponse erpResponse= new ErpResponse("parameters are null or empty.", HttpStatus.BAD_REQUEST.value());
 			return new ResponseEntity<ErpResponse>(erpResponse,HttpStatus.OK);
 		}
 		
-		ErpResponse res=masterService.list(classId,startNo,endNo);
+		ErpResponse res=masterService.list(classId,pageSize,pageNo);
 		return new ResponseEntity<ErpResponse>(res,HttpStatus.OK);
 		
 		

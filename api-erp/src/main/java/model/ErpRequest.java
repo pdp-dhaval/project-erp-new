@@ -6,9 +6,9 @@ public class ErpRequest {
 	
 	private Integer classId; // 
 	
-	private Integer startNo; // is startNo -1 and endNo is -1 then get all list
+	private Integer pageSize; // is startNo -1 and endNo is -1 then get all list
 	
-	private Integer endNo; // is startNo -1 and endNo is -1 then get all list
+	private Integer pageNo; // is startNo -1 and endNo is -1 then get all list
 
 	public Long getId() {
 		return id;
@@ -26,23 +26,22 @@ public class ErpRequest {
 		this.classId = classId;
 	}
 
-	public Integer getStartNo() {
-		return startNo;
+	public Integer getPageSize() {
+		return pageSize;
 	}
 
-	public void setStartNo(Integer startNo) {
-		this.startNo = startNo;
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
 	}
 
-	public Integer getEndNo() {
-		return endNo;
+	public Integer getPageNo() {
+		return pageNo;
 	}
 
-	public void setEndNo(Integer endNo) {
-		this.endNo = endNo;
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
 	}
-	
-	
-	
+
+		
 	
 }

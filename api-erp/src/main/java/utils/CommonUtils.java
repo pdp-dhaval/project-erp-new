@@ -9,6 +9,7 @@ public class CommonUtils {
 	public static final String SOMETHING_WENT_WRONG = "Something went wrong";
 	public static final String DATA_SUCCESSFULLY_FETCHED = "Data Successfully Fetched";
 	public static final String DATA_SUCCESSFULLY_INACTIVATED = "Data Successfully InActivated";
+	public static final String LIST_SUCCESSFULLY_FETCHED = "List Successfully Fetched";
 
 	public static boolean isListNullOrEmpty(Collection data) {
         return (data == null || data.isEmpty());

@@ -17,6 +17,7 @@ import com.erp.service.master.MasterService;
 
 import model.ErpRequest;
 import model.ErpResponse;
+import model.MasterModel;
 import utils.CommonUtils;
 
 @RestController
@@ -80,6 +81,42 @@ public class MasterController {
 		
 		ErpResponse res=masterService.inactive(id, classId);
 		return new ResponseEntity<ErpResponse>(res,HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ErpResponse> save(@RequestBody MasterModel request) {
+		
+		try
+		{
+		if(CommonUtils.isObjectNullOrEmpty(request)||CommonUtils.isObjectNullOrEmpty(request.getClassId()))
+		{
+			log.error("request is null or empty.");
+			ErpResponse erpResponse= new ErpResponse("request is null or empty..", HttpStatus.BAD_REQUEST.value());
+			return new ResponseEntity<ErpResponse>(erpResponse,HttpStatus.OK);
+		}
+		
+		ErpResponse erpResponse;
+		Boolean res=masterService.save(request);
+		if(res)
+		{
+			erpResponse= new ErpResponse("successfully saved", HttpStatus.OK.value());
+		}
+		else
+		{
+			erpResponse=new ErpResponse("error while saving master", HttpStatus.BAD_REQUEST.value());
+			
+		}
+		
+		
+		return new ResponseEntity<ErpResponse>(erpResponse,HttpStatus.OK);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return new ResponseEntity<ErpResponse>(
+				     new ErpResponse(CommonUtils.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR.value()),
+				     HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 }

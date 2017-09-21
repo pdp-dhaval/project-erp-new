@@ -1,6 +1,7 @@
 package com.erp.service.master;
 
 import model.ErpResponse;
+import model.MasterModel;
 
 public interface MasterService {
 
@@ -12,4 +13,6 @@ public interface MasterService {
 	
 	// for inactive object of master table
 	public ErpResponse inactive(Long id,Integer classId);
+	
+	public Boolean save(MasterModel request);
 }

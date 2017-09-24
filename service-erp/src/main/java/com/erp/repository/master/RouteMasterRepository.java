@@ -10,15 +10,15 @@ import org.springframework.data.repository.query.Param;
 
 import com.erp.domain.master.RouteMaster;
 
-public interface RouteMasterRepository extends JpaRepository<RouteMaster, Long>{
+public interface RouteMasterRepository extends JpaRepository<RouteMaster, Long> {
 
 	@Modifying
 	@Query("update RouteMaster am set am.isActive = false,am.modifiedDate = NOW() where am.id =:id")
 	public int setInActive(@Param("id") Long id);
-	
-	@Query( "from RouteMaster am where isActive=true" )
+
+	@Query("from RouteMaster am where am.isActive = true")
 	List<RouteMaster> listAll();
-	
-	@Query( "from RouteMaster am where isActive=true" )
+
+	@Query("from RouteMaster am where am.isActive = true")
 	public List<RouteMaster> listByRange(Pageable pageable);
 }

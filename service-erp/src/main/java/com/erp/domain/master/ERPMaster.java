@@ -1,22 +1,44 @@
-package model;
+package com.erp.domain.master;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class CategoryMasterRequest {
+import javax.persistence.*;
 
+/**
+ * The persistent class for the route_master database table.
+ * 
+ */
+@Entity
+@Table(name = "erp_mstr")
+@Inheritance(strategy = InheritanceType.JOINED)
+public class ERPMaster implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String categoryName;
-
+	@Column(name = "created_by")
 	private Long createdBy;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_date")
 	private Date createdDate;
 
+	@Column(name = "is_active")
 	private Boolean isActive;
 
+	@Column(name = "modified_by")
 	private Long modifiedBy;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "modified_date")
 	private Date modifiedDate;
+
+	public ERPMaster() {
+		super();
+	}
 
 	public Long getId() {
 		return id;
@@ -24,14 +46,6 @@ public class CategoryMasterRequest {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getCategoryName() {
-		return categoryName;
-	}
-
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
 	}
 
 	public Long getCreatedBy() {
@@ -73,7 +87,10 @@ public class CategoryMasterRequest {
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
-	
-	
 
+	@Override
+	public String toString() {
+		return "ERPMaster [getId()=" + getId() + "]";
+	}
+	
 }

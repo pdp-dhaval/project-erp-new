@@ -1,69 +1,42 @@
-package com.erp.domain.master;
+package model.master;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-/**
- * The persistent class for the account_master database table.
- * 
- */
-@Entity
-@Table(name = "account_master")
-public class AccountMaster extends ERPMaster implements Serializable {
+import model.common.ERPRequest;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class AccountMasterRequest extends ERPRequest implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
-	@OneToOne
-	@JoinColumn(name = "erp_id")
-	private ERPMaster erpMaster;
-
-	@Column(name = "account_name")
 	private String accountName;
 
-	@Column(name = "alias_name")
 	private String aliasName;
 
-	@Column(name = "balance_type")
 	private Integer balanceType;
 
-	@Column(name = "contact_person_name")
 	private String contactPersonName;
 
-	@Column(name = "email_id")
 	private String emailId;
 
-	@Column(name = "fax_number")
 	private String faxNumber;
 
-	@Column(name = "gst_number")
 	private String gstNumber;
 
-	@Column(name = "mobile_number")
 	private String mobileNumber;
 
-	@Column(name = "opening_balance")
 	private BigDecimal openingBalance;
 
-	@Column(name = "pan_number")
 	private String panNumber;
 
-	@Column(name = "phone_number")
 	private String phoneNumber;
 
-	public AccountMaster() {
+	public AccountMasterRequest() {
 		super();
 	}
 	
-	public ERPMaster getErpMaster() {
-		return erpMaster;
-	}
-
-	public void setErpMaster(ERPMaster erpMaster) {
-		this.erpMaster = erpMaster;
-	}
-
-
-
 	public String getAccountName() {
 		return accountName;
 	}
@@ -152,8 +125,4 @@ public class AccountMaster extends ERPMaster implements Serializable {
 		this.phoneNumber = phoneNumber;
 	}
 
-	@Override
-	public String toString() {
-		return "AccountMaster [getId()=" + getId() + "]";
-	}
 }

@@ -3,6 +3,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>api-erp</artifactId>
+	<groupId>com.erp.parent</groupId>
+	<version>0.0.1</version>
 	<properties>
 		<java-version>1.8</java-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -22,18 +24,5 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>${jackson.databind-version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.12</version>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-core-asl</artifactId>
-			<version>1.9.12</version>
-		</dependency>
 	</dependencies>
-	<groupId>com.erp.parent</groupId>
-	<version>0.0.1</version>
 </project>

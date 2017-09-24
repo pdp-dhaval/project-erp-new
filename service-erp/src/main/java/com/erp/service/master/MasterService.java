@@ -1,8 +1,7 @@
 package com.erp.service.master;
 
-import model.ErpResponse;
 import model.MasterModel;
-
+import model.common.ErpResponse;
 public interface MasterService {
 
 	// for get single object from master table

@@ -4,73 +4,61 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.*;
-import java.util.Date;
 
+import com.erp.domain.master.ERPMaster;
+
+import java.util.Date;
 
 /**
  * The persistent class for the purchase_detail database table.
  * 
  */
 @Entity
-@Table(name="purchase_detail")
-public class PurchaseDetail implements Serializable {
+@Table(name = "purchase_detail")
+public class PurchaseDetail extends ERPMaster implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
-
-	@Column(name="account_id")
+	@OneToOne
+	@JoinColumn(name = "erp_id")
+	private ERPMaster erpMaster;
+	
+	@Column(name = "account_id")
 	private Long accountId;
 
 	private BigDecimal adjustment;
 
-	@Column(name="bill_number")
+	@Column(name = "bill_number")
 	private String billNumber;
-
-	@Column(name="created_by")
-	private Long createdBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_date")
-	private Date createdDate;
 
 	private BigDecimal discount;
 
-	@Column(name="invoice_number")
+	@Column(name = "invoice_number")
 	private String invoiceNumber;
 
-	@Column(name="is_active")
-	private Boolean isActive;
-
-	@Column(name="modified_by")
-	private Long modifiedBy;
-
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="modified_date")
-	private Date modifiedDate;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="purchase_date")
+	@Column(name = "purchase_date")
 	private Date purchaseDate;
 
 	private BigDecimal rate;
 
-	@Column(name="tax_id")
+	@Column(name = "tax_id")
 	private Integer taxId;
 
 	private BigDecimal total;
 
 	public PurchaseDetail() {
+		super();
 	}
 
-	public Long getId() {
-		return id;
+	public ERPMaster getErpMaster() {
+		return erpMaster;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+
+	public void setErpMaster(ERPMaster erpMaster) {
+		this.erpMaster = erpMaster;
 	}
+
 
 	public Long getAccountId() {
 		return accountId;
@@ -96,22 +84,6 @@ public class PurchaseDetail implements Serializable {
 		this.billNumber = billNumber;
 	}
 
-	public Long getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(Long createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
 	public BigDecimal getDiscount() {
 		return discount;
 	}
@@ -126,30 +98,6 @@ public class PurchaseDetail implements Serializable {
 
 	public void setInvoiceNumber(String invoiceNumber) {
 		this.invoiceNumber = invoiceNumber;
-	}
-
-	public Boolean getIsActive() {
-		return isActive;
-	}
-
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
-	}
-
-	public Long getModifiedBy() {
-		return modifiedBy;
-	}
-
-	public void setModifiedBy(Long modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
 	}
 
 	public Date getPurchaseDate() {
@@ -184,5 +132,4 @@ public class PurchaseDetail implements Serializable {
 		this.total = total;
 	}
 
-	
 }

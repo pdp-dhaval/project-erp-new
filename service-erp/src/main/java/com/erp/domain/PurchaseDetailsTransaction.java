@@ -4,76 +4,39 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.*;
-import java.util.Date;
 
+import com.erp.domain.master.ERPMaster;
 
 /**
  * The persistent class for the purchase_details_transaction database table.
  * 
  */
 @Entity
-@Table(name="purchase_details_transaction")
-public class PurchaseDetailsTransaction implements Serializable {
+@Table(name = "purchase_details_transaction")
+public class PurchaseDetailsTransaction extends ERPMaster implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
-
-	@Column(name="created_by")
-	private Long createdBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_date")
-	private Date createdDate;
+	@OneToOne
+	@JoinColumn(name = "erp_id")
+	private ERPMaster erpMaster;
 
 	private BigDecimal discount;
 
-	@Column(name="free_quantity")
+	@Column(name = "free_quantity")
 	private Integer freeQuantity;
 
-	@Column(name="is_active")
-	private Boolean isActive;
-
-	@Column(name="modified_by")
-	private Long modifiedBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="modified_date")
-	private Date modifiedDate;
-
-	@Column(name="product_id")
+	@Column(name = "product_id")
 	private Long productId;
 
-	@Column(name="purchase_detail_id")
+	@Column(name = "purchase_detail_id")
 	private Long purchaseDetailId;
 
 	private Integer quantity;
 
 	private Integer unit;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Long getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(Long createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
+	public PurchaseDetailsTransaction() {
+		super();
 	}
 
 	public BigDecimal getDiscount() {
@@ -90,30 +53,6 @@ public class PurchaseDetailsTransaction implements Serializable {
 
 	public void setFreeQuantity(Integer freeQuantity) {
 		this.freeQuantity = freeQuantity;
-	}
-
-	public Boolean getIsActive() {
-		return isActive;
-	}
-
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
-	}
-
-	public Long getModifiedBy() {
-		return modifiedBy;
-	}
-
-	public void setModifiedBy(Long modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
 	}
 
 	public Long getProductId() {
@@ -148,5 +87,4 @@ public class PurchaseDetailsTransaction implements Serializable {
 		this.unit = unit;
 	}
 
-	
 }

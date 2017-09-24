@@ -10,14 +10,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.erp.repository.master.AccountMasterRepository;
-import com.erp.service.master.AccountMasterService;
 import com.erp.service.master.MasterService;
 
+<<<<<<< HEAD
+import model.common.ErpResponse;
+import model.master.MasterRequest;
+=======
 import model.ErpRequest;
 import model.ErpResponse;
 import model.MasterModel;
+>>>>>>> branch 'development' of https://github.com/pdp-dhaval/project-erp-new.git
 import utils.CommonUtils;
 
 @RestController
@@ -30,7 +32,7 @@ public class MasterController {
 	private MasterService masterService;
 	
 	@RequestMapping(value = "/get", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ErpResponse> get(@RequestBody ErpRequest request) {
+	public ResponseEntity<ErpResponse> get(@RequestBody MasterRequest request) {
 		
 		Long id=request.getId();
 		Integer classId=request.getClassId();
@@ -47,7 +49,7 @@ public class MasterController {
 	}
 	
 	@RequestMapping(value = "/list", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ErpResponse> list(@RequestBody ErpRequest request) {
+	public ResponseEntity<ErpResponse> list(@RequestBody MasterRequest request) {
 		
 		Integer classId=request.getClassId();
 		Integer pageSize=request.getPageSize();
@@ -67,7 +69,7 @@ public class MasterController {
 	}
 	
 	@RequestMapping(value = "/inactive", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ErpResponse> inactive(@RequestBody ErpRequest request) {
+	public ResponseEntity<ErpResponse> inactive(@RequestBody MasterRequest request) {
 		
 		Long id=request.getId();
 		Integer classId=request.getClassId();

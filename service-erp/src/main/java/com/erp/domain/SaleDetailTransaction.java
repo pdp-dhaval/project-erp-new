@@ -4,79 +4,47 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.*;
-import java.util.Date;
 
+import com.erp.domain.master.ERPMaster;
+
+import model.common.ErpResponse;
+
+import java.util.Date;
 
 /**
  * The persistent class for the sale_detail_transaction database table.
  * 
  */
 @Entity
-@Table(name="sale_detail_transaction")
-public class SaleDetailTransaction implements Serializable {
+@Table(name = "sale_detail_transaction")
+public class SaleDetailTransaction extends ERPMaster implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
-
-	@Column(name="created_by")
-	private Long createdBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_date")
-	private Date createdDate;
+	@OneToOne
+	@JoinColumn(name = "erp_id")
+	private ERPMaster erpMaster;
 
 	private BigDecimal discount;
 
-	@Column(name="free_quantity")
+	@Column(name = "free_quantity")
 	private Long freeQuantity;
 
-	@Column(name="is_active")
-	private Boolean isActive;
-
-	@Column(name="modified_by")
-	private Long modifiedBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="modified_date")
-	private Date modifiedDate;
-
-	@Column(name="product_id")
+	@Column(name = "product_id")
 	private Long productId;
 
 	private Long quantity;
 
 	private BigDecimal rate;
 
-	@Column(name="sale_detail_id")
+	@Column(name = "sale_detail_id")
 	private Long saleDetailId;
 
 	private Integer unit;
 
-	public Long getId() {
-		return id;
+	public SaleDetailTransaction() {
+		super();
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Long getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(Long createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
 
 	public BigDecimal getDiscount() {
 		return discount;
@@ -92,30 +60,6 @@ public class SaleDetailTransaction implements Serializable {
 
 	public void setFreeQuantity(Long freeQuantity) {
 		this.freeQuantity = freeQuantity;
-	}
-
-	public Boolean getIsActive() {
-		return isActive;
-	}
-
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
-	}
-
-	public Long getModifiedBy() {
-		return modifiedBy;
-	}
-
-	public void setModifiedBy(Long modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
 	}
 
 	public Long getProductId() {
@@ -158,5 +102,4 @@ public class SaleDetailTransaction implements Serializable {
 		this.unit = unit;
 	}
 
-	
 }

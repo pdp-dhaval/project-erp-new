@@ -2,7 +2,6 @@ package com.erp.domain.master;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
 
 
 /**
@@ -11,13 +10,14 @@ import java.util.Date;
  */
 @Entity
 @Table(name="company_master")
-public class CompanyMaster implements Serializable {
+public class CompanyMaster extends ERPMaster implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
-
+	
+	@OneToOne
+	@JoinColumn(name = "erp_id")
+	private ERPMaster erpMaster;
+	
 	@Column(name="account_id")
 	private Long accountId;
 
@@ -27,29 +27,16 @@ public class CompanyMaster implements Serializable {
 	@Column(name="company_name")
 	private String companyName;
 
-	@Column(name="created_by")
-	private Long createdBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_date")
-	private Date createdDate;
-
-	@Column(name="is_active")
-	private Boolean isActive;
-
-	@Column(name="modified_by")
-	private Long modifiedBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="modified_date")
-	private Date modifiedDate;
-
-	public Long getId() {
-		return id;
+	public CompanyMaster() {
+		super();
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public ERPMaster getErpMaster() {
+		return erpMaster;
+	}
+
+	public void setErpMaster(ERPMaster erpMaster) {
+		this.erpMaster = erpMaster;
 	}
 
 	public Long getAccountId() {
@@ -75,46 +62,10 @@ public class CompanyMaster implements Serializable {
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
-
-	public Long getCreatedBy() {
-		return createdBy;
+	
+	@Override
+	public String toString() {
+		return "CompanyMaster [getId()=" + getId() + "]";
 	}
-
-	public void setCreatedBy(Long createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public Boolean getIsActive() {
-		return isActive;
-	}
-
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
-	}
-
-	public Long getModifiedBy() {
-		return modifiedBy;
-	}
-
-	public void setModifiedBy(Long modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
-
 	
 }

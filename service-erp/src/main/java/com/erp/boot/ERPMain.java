@@ -8,8 +8,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @SpringBootApplication
 @ComponentScan(basePackages = { "com.erp" })
 @EnableAsync
-public class ErpMain {
+public class ERPMain {
 	public static void main(String[] args) throws Exception {
-		SpringApplication.run(ErpMain.class, args);
+		SpringApplication.run(ERPMain.class, args);
 	}
 }

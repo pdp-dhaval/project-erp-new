@@ -1,6 +1,13 @@
-package model;
+package model.master;
 
-public class ErpRequest {
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class MasterRequest implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Long id;
 	
@@ -10,6 +17,10 @@ public class ErpRequest {
 	
 	private Integer pageNo; // is startNo -1 and endNo is -1 then get all list
 
+	public MasterRequest() {
+		super();
+	}
+	
 	public Long getId() {
 		return id;
 	}

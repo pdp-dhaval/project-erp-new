@@ -1,9 +1,15 @@
-package model;
+package model.common;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-public class ErpResponse {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ErpResponse implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Long id;
 

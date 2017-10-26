@@ -1,8 +1,12 @@
 package com.erp.domain.master;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the account_master database table.
@@ -10,12 +14,10 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name = "account_master")
-public class AccountMaster extends ERPMaster implements Serializable {
+@NamedQuery(name = "AccountMaster.findAll", query = "SELECT a FROM AccountMaster a")
+@PrimaryKeyJoinColumn(referencedColumnName = "erp_id")
+public class AccountMaster extends ErpMstr implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	@OneToOne
-	@JoinColumn(name = "erp_id")
-	private ERPMaster erpMaster;
 
 	@Column(name = "account_name")
 	private String accountName;
@@ -42,7 +44,7 @@ public class AccountMaster extends ERPMaster implements Serializable {
 	private String mobileNumber;
 
 	@Column(name = "opening_balance")
-	private BigDecimal openingBalance;
+	private Double openingBalance;
 
 	@Column(name = "pan_number")
 	private String panNumber;
@@ -50,22 +52,19 @@ public class AccountMaster extends ERPMaster implements Serializable {
 	@Column(name = "phone_number")
 	private String phoneNumber;
 
+	@Column(name = "user_id")
+	private Long userId;
+
 	public AccountMaster() {
 		super();
 	}
 	
-	public ERPMaster getErpMaster() {
-		return erpMaster;
+	public AccountMaster(Long erpId) {
+		super(erpId);
 	}
-
-	public void setErpMaster(ERPMaster erpMaster) {
-		this.erpMaster = erpMaster;
-	}
-
-
 
 	public String getAccountName() {
-		return accountName;
+		return this.accountName;
 	}
 
 	public void setAccountName(String accountName) {
@@ -73,7 +72,7 @@ public class AccountMaster extends ERPMaster implements Serializable {
 	}
 
 	public String getAliasName() {
-		return aliasName;
+		return this.aliasName;
 	}
 
 	public void setAliasName(String aliasName) {
@@ -81,7 +80,7 @@ public class AccountMaster extends ERPMaster implements Serializable {
 	}
 
 	public Integer getBalanceType() {
-		return balanceType;
+		return this.balanceType;
 	}
 
 	public void setBalanceType(Integer balanceType) {
@@ -89,7 +88,7 @@ public class AccountMaster extends ERPMaster implements Serializable {
 	}
 
 	public String getContactPersonName() {
-		return contactPersonName;
+		return this.contactPersonName;
 	}
 
 	public void setContactPersonName(String contactPersonName) {
@@ -97,7 +96,7 @@ public class AccountMaster extends ERPMaster implements Serializable {
 	}
 
 	public String getEmailId() {
-		return emailId;
+		return this.emailId;
 	}
 
 	public void setEmailId(String emailId) {
@@ -105,7 +104,7 @@ public class AccountMaster extends ERPMaster implements Serializable {
 	}
 
 	public String getFaxNumber() {
-		return faxNumber;
+		return this.faxNumber;
 	}
 
 	public void setFaxNumber(String faxNumber) {
@@ -113,31 +112,39 @@ public class AccountMaster extends ERPMaster implements Serializable {
 	}
 
 	public String getGstNumber() {
-		return gstNumber;
+		return this.gstNumber;
 	}
 
 	public void setGstNumber(String gstNumber) {
 		this.gstNumber = gstNumber;
 	}
 
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
 	public String getMobileNumber() {
-		return mobileNumber;
+		return this.mobileNumber;
 	}
 
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 
-	public BigDecimal getOpeningBalance() {
-		return openingBalance;
+	public Double getOpeningBalance() {
+		return this.openingBalance;
 	}
 
-	public void setOpeningBalance(BigDecimal openingBalance) {
+	public void setOpeningBalance(Double openingBalance) {
 		this.openingBalance = openingBalance;
 	}
 
 	public String getPanNumber() {
-		return panNumber;
+		return this.panNumber;
 	}
 
 	public void setPanNumber(String panNumber) {
@@ -145,15 +152,12 @@ public class AccountMaster extends ERPMaster implements Serializable {
 	}
 
 	public String getPhoneNumber() {
-		return phoneNumber;
+		return this.phoneNumber;
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
-	@Override
-	public String toString() {
-		return "AccountMaster [getId()=" + getId() + "]";
-	}
+
 }

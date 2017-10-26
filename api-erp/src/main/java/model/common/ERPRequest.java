@@ -10,9 +10,9 @@ public class ERPRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
-	
-	private Long orgId;
+	private Long erpId;
+
+	private Long organizationId;
 
 	private Long createdBy;
 
@@ -25,26 +25,28 @@ public class ERPRequest implements Serializable {
 	private Date modifiedDate;
 
 	public ERPRequest() {
-		// TODO Auto-generated constructor stub
 		super();
 	}
 
-	public Long getOrgId() {
-		return orgId;
+	public ERPRequest(Long erpId) {
+		super();
+		this.erpId = erpId;
 	}
 
-
-	public void setOrgId(Long orgId) {
-		this.orgId = orgId;
+	public Long getOrganizationId() {
+		return organizationId;
 	}
 
-
-	public Long getId() {
-		return id;
+	public void setOrganizationId(Long organizationId) {
+		this.organizationId = organizationId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public Long getErpId() {
+		return erpId;
+	}
+
+	public void setErpId(Long erpId) {
+		this.erpId = erpId;
 	}
 
 	public Long getCreatedBy() {

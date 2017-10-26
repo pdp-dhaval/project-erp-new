@@ -16,6 +16,11 @@ public class DataRequest implements Serializable {
 		super();
 	}
 
+	public DataRequest(Long id) {
+		super();
+		this.id = id;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -44,5 +49,5 @@ public class DataRequest implements Serializable {
 	public String toString() {
 		return "DataRequest [id=" + id + ", value=" + value + "]";
 	}
-	
+
 }

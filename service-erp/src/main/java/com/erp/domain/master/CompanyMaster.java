@@ -1,42 +1,57 @@
 package com.erp.domain.master;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the company_master database table.
  * 
  */
 @Entity
-@Table(name="company_master")
-public class CompanyMaster extends ERPMaster implements Serializable {
+@Table(name = "company_master")
+@NamedQuery(name = "CompanyMaster.findAll", query = "SELECT c FROM CompanyMaster c")
+@PrimaryKeyJoinColumn(referencedColumnName = "erp_id")
+public class CompanyMaster extends ErpMstr implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	
-	@OneToOne
-	@JoinColumn(name = "erp_id")
-	private ERPMaster erpMaster;
-	
-	@Column(name="account_id")
-	private Long accountId;
-
-	@Column(name="company_code")
+	@Column(name = "company_code")
 	private String companyCode;
 
-	@Column(name="company_name")
+	@Column(name = "company_name")
 	private String companyName;
 
+	@Column(name = "account_id")
+	private Long accountId;
+
+	@Column(name = "org_id")
+	private Long organizationId;
+
 	public CompanyMaster() {
-		super();
 	}
 
-	public ERPMaster getErpMaster() {
-		return erpMaster;
+	public CompanyMaster(Long erpId) {
+		super(erpId);
 	}
 
-	public void setErpMaster(ERPMaster erpMaster) {
-		this.erpMaster = erpMaster;
+	public String getCompanyCode() {
+		return this.companyCode;
+	}
+
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
+	}
+
+	public String getCompanyName() {
+		return this.companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 
 	public Long getAccountId() {
@@ -47,25 +62,12 @@ public class CompanyMaster extends ERPMaster implements Serializable {
 		this.accountId = accountId;
 	}
 
-	public String getCompanyCode() {
-		return companyCode;
+	public Long getOrganizationId() {
+		return organizationId;
 	}
 
-	public void setCompanyCode(String companyCode) {
-		this.companyCode = companyCode;
+	public void setOrganizationId(Long organizationId) {
+		this.organizationId = organizationId;
 	}
 
-	public String getCompanyName() {
-		return companyName;
-	}
-
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
-	
-	@Override
-	public String toString() {
-		return "CompanyMaster [getId()=" + getId() + "]";
-	}
-	
 }

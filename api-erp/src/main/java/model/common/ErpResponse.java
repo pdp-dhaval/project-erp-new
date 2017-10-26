@@ -30,6 +30,13 @@ public class ErpResponse implements Serializable {
 		this.message = message;
 		this.status = status;
 	}
+	
+	public ErpResponse(String message,Integer status,Object data) {
+		super();
+		this.message = message;
+		this.status = status;
+		this.data = data;
+	}
 
 	public Long getId() {
 		return id;

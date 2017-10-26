@@ -18,11 +18,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.zaxxer.hikari.HikariDataSource;
 
+import utils.CommonUtils;
 
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = {
-		"com.erp.repository" }, entityManagerFactoryRef = "erpDataStoreEM", transactionManagerRef = "erpDataStoreTM")
+		"com.erp.repository" }, entityManagerFactoryRef = CommonUtils.PersistanceContext.ERP_EM, transactionManagerRef = CommonUtils.PersistanceContext.ERP_TM)
 public class PersistenceContext {
 
 	protected static final String PROPERTY_NAME_DATABASE_DRIVER = "erp.db.driver";
@@ -47,7 +48,7 @@ public class PersistenceContext {
 	@Autowired
 	private Environment environment;
 
-	@Bean(name = "erpDataStore")
+	@Bean(name = CommonUtils.PersistanceContext.ERP_DS)
 	@Primary
 	public DataSource dataSource() {
 		HikariDataSource dataSource = new HikariDataSource();
@@ -64,8 +65,8 @@ public class PersistenceContext {
 		return dataSource;
 	}
 
-	@Bean(name = "erpDataStoreTM")
-	@DependsOn("erpDataStore")
+	@Bean(name = CommonUtils.PersistanceContext.ERP_TM)
+	@DependsOn(CommonUtils.PersistanceContext.ERP_DS)
 	@Primary
 	public JpaTransactionManager transactionManager() {
 		JpaTransactionManager transactionManager = new JpaTransactionManager();
@@ -75,8 +76,8 @@ public class PersistenceContext {
 		return transactionManager;
 	}
 
-	@Bean(name = "erpDataStoreEM")
-	@DependsOn("erpDataStore")
+	@Bean(name = CommonUtils.PersistanceContext.ERP_EM)
+	@DependsOn(CommonUtils.PersistanceContext.ERP_DS)
 	@Primary
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();

@@ -1,71 +1,71 @@
 package com.erp.domain.master;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the customer_master database table.
  * 
  */
 @Entity
-@Table(name="customer_master")
-public class CustomerMaster extends ERPMaster implements Serializable {
+@Table(name = "customer_master")
+@NamedQuery(name = "CustomerMaster.findAll", query = "SELECT c FROM CustomerMaster c")
+@PrimaryKeyJoinColumn(referencedColumnName = "erp_id")
+public class CustomerMaster extends ErpMstr implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	
-	@OneToOne
-	@JoinColumn(name = "erp_id")
-	private ERPMaster erpMaster;
-	
-	@Column(name="account_id")
-	private Long accountId;
-
-	@Column(name="customer_type")
+	@Column(name = "customer_type")
 	private Integer customerType;
 
-	@Column(name="route_id")
-	private Long routeId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "account_id")
+	private AccountMaster accountMaster;
+
+	@Column(name = "org_id")
+	private Long organizationId;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "route_id")
+	private RouteMaster routeMaster;
 
 	public CustomerMaster() {
 		super();
 	}
 	
-	public ERPMaster getErpMaster() {
-		return erpMaster;
-	}
-
-	public void setErpMaster(ERPMaster erpMaster) {
-		this.erpMaster = erpMaster;
-	}
-
-	public Long getAccountId() {
-		return accountId;
-	}
-
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
+	public CustomerMaster(Long erpId) {
+		super(erpId);
 	}
 
 	public Integer getCustomerType() {
-		return customerType;
+		return this.customerType;
 	}
 
 	public void setCustomerType(Integer customerType) {
 		this.customerType = customerType;
 	}
 
-	public Long getRouteId() {
-		return routeId;
+	public AccountMaster getAccountMaster() {
+		return this.accountMaster;
 	}
 
-	public void setRouteId(Long routeId) {
-		this.routeId = routeId;
-	}
-
-	@Override
-	public String toString() {
-		return "CustomerMaster [getId()=" + getId() + "]";
+	public void setAccountMaster(AccountMaster accountMaster) {
+		this.accountMaster = accountMaster;
 	}
 	
+	public RouteMaster getRouteMaster() {
+		return this.routeMaster;
+	}
+
+	public void setRouteMaster(RouteMaster routeMaster) {
+		this.routeMaster = routeMaster;
+	}
+
 }

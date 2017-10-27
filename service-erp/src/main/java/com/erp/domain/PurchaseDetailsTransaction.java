@@ -1,59 +1,82 @@
 package com.erp.domain;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-
-import javax.persistence.*;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.erp.domain.master.ProductMaster;
 
 /**
  * The persistent class for the purchase_details_transaction database table.
  * 
  */
 @Entity
-@Table(name="purchase_details_transaction")
+@Table(name = "purchase_details_transaction")
+@NamedQuery(name = "PurchaseDetailsTransaction.findAll", query = "SELECT p FROM PurchaseDetailsTransaction p")
 public class PurchaseDetailsTransaction implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name="created_by")
+	@Column(name = "created_by")
 	private Long createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_date")
+	@Column(name = "created_date")
 	private Date createdDate;
 
-	private BigDecimal discount;
+	private Double discount;
 
-	@Column(name="free_quantity")
+	@Column(name = "free_quantity")
 	private Integer freeQuantity;
 
-	@Column(name="is_active")
+	@Column(name = "is_active")
 	private Boolean isActive;
-
-	@Column(name="modified_by")
-	private Long modifiedBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="modified_date")
-	private Date modifiedDate;
-
-	@Column(name="product_id")
-	private Long productId;
-
-	@Column(name="purchase_detail_id")
-	private Long purchaseDetailId;
 
 	private Integer quantity;
 
 	private Integer unit;
 
+	@Column(name = "updated_by")
+	private Long updatedBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "updated_date")
+	private Date updatedDate;
+
+	@Column(name = "purchase_detail_id")
+	private Long purchaseDetailId;
+
+	@Column(name = "org_id")
+	private Long organizationId;
+	
+	@Column(name = "user_id")
+	private Long userId;
+
+	// bi-directional many-to-one association to ProductMaster
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "product_id")
+	private ProductMaster productMaster;
+
+	public PurchaseDetailsTransaction() {
+	}
+
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Long id) {
@@ -61,7 +84,7 @@ public class PurchaseDetailsTransaction implements Serializable {
 	}
 
 	public Long getCreatedBy() {
-		return createdBy;
+		return this.createdBy;
 	}
 
 	public void setCreatedBy(Long createdBy) {
@@ -69,23 +92,23 @@ public class PurchaseDetailsTransaction implements Serializable {
 	}
 
 	public Date getCreatedDate() {
-		return createdDate;
+		return this.createdDate;
 	}
 
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
-	public BigDecimal getDiscount() {
-		return discount;
+	public Double getDiscount() {
+		return this.discount;
 	}
 
-	public void setDiscount(BigDecimal discount) {
+	public void setDiscount(Double discount) {
 		this.discount = discount;
 	}
 
 	public Integer getFreeQuantity() {
-		return freeQuantity;
+		return this.freeQuantity;
 	}
 
 	public void setFreeQuantity(Integer freeQuantity) {
@@ -93,35 +116,51 @@ public class PurchaseDetailsTransaction implements Serializable {
 	}
 
 	public Boolean getIsActive() {
-		return isActive;
+		return this.isActive;
 	}
 
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
 	}
 
-	public Long getModifiedBy() {
-		return modifiedBy;
+	public Integer getQuantity() {
+		return this.quantity;
 	}
 
-	public void setModifiedBy(Long modifiedBy) {
-		this.modifiedBy = modifiedBy;
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
-	public Date getModifiedDate() {
-		return modifiedDate;
+	public Integer getUnit() {
+		return this.unit;
 	}
 
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
+	public void setUnit(Integer unit) {
+		this.unit = unit;
 	}
 
-	public Long getProductId() {
-		return productId;
+	public Long getUpdatedBy() {
+		return this.updatedBy;
 	}
 
-	public void setProductId(Long productId) {
-		this.productId = productId;
+	public void setUpdatedBy(Long updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Date getUpdatedDate() {
+		return this.updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+	public ProductMaster getProductMaster() {
+		return this.productMaster;
+	}
+
+	public void setProductMaster(ProductMaster productMaster) {
+		this.productMaster = productMaster;
 	}
 
 	public Long getPurchaseDetailId() {
@@ -132,21 +171,20 @@ public class PurchaseDetailsTransaction implements Serializable {
 		this.purchaseDetailId = purchaseDetailId;
 	}
 
-	public Integer getQuantity() {
-		return quantity;
+	public Long getOrganizationId() {
+		return organizationId;
 	}
 
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
+	public void setOrganizationId(Long organizationId) {
+		this.organizationId = organizationId;
 	}
 
-	public Integer getUnit() {
-		return unit;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setUnit(Integer unit) {
-		this.unit = unit;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
-	
 }

@@ -1,88 +1,70 @@
 package com.erp.domain.master;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.util.Date;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the account_master database table.
  * 
  */
 @Entity
-@Table(name="account_master")
-public class AccountMaster implements Serializable {
+@Table(name = "account_master")
+@NamedQuery(name = "AccountMaster.findAll", query = "SELECT a FROM AccountMaster a")
+@PrimaryKeyJoinColumn(referencedColumnName = "erp_id")
+public class AccountMaster extends ErpMstr implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
-
-	@Column(name="account_name")
+	@Column(name = "account_name")
 	private String accountName;
 
-	@Column(name="alias_name")
+	@Column(name = "alias_name")
 	private String aliasName;
 
-	@Column(name="balance_type")
+	@Column(name = "balance_type")
 	private Integer balanceType;
 
-	@Column(name="contact_person_name")
+	@Column(name = "contact_person_name")
 	private String contactPersonName;
 
-	@Column(name="created_by")
-	private Long createdBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_date")
-	private Date createdDate;
-
-	@Column(name="email_id")
+	@Column(name = "email_id")
 	private String emailId;
 
-	@Column(name="fax_number")
+	@Column(name = "fax_number")
 	private String faxNumber;
 
-	@Column(name="gst_number")
+	@Column(name = "gst_number")
 	private String gstNumber;
 
-	@Column(name="is_active")
-	private Boolean isActive;
-
-	@Column(name="mobile_number")
+	@Column(name = "mobile_number")
 	private String mobileNumber;
 
-	@Column(name="modified_by")
-	private BigInteger modifiedBy;
+	@Column(name = "opening_balance")
+	private Double openingBalance;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="modified_date")
-	private Date modifiedDate;
-
-	@Column(name="opening_balance")
-	private BigDecimal openingBalance;
-
-	@Column(name="pan_number")
+	@Column(name = "pan_number")
 	private String panNumber;
 
-	@Column(name="phone_number")
+	@Column(name = "phone_number")
 	private String phoneNumber;
 
+	@Column(name = "user_id")
+	private Long userId;
+
 	public AccountMaster() {
+		super();
 	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	
+	public AccountMaster(Long erpId) {
+		super(erpId);
 	}
 
 	public String getAccountName() {
-		return accountName;
+		return this.accountName;
 	}
 
 	public void setAccountName(String accountName) {
@@ -90,7 +72,7 @@ public class AccountMaster implements Serializable {
 	}
 
 	public String getAliasName() {
-		return aliasName;
+		return this.aliasName;
 	}
 
 	public void setAliasName(String aliasName) {
@@ -98,7 +80,7 @@ public class AccountMaster implements Serializable {
 	}
 
 	public Integer getBalanceType() {
-		return balanceType;
+		return this.balanceType;
 	}
 
 	public void setBalanceType(Integer balanceType) {
@@ -106,31 +88,15 @@ public class AccountMaster implements Serializable {
 	}
 
 	public String getContactPersonName() {
-		return contactPersonName;
+		return this.contactPersonName;
 	}
 
 	public void setContactPersonName(String contactPersonName) {
 		this.contactPersonName = contactPersonName;
 	}
 
-	public Long getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(Long createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
 	public String getEmailId() {
-		return emailId;
+		return this.emailId;
 	}
 
 	public void setEmailId(String emailId) {
@@ -138,7 +104,7 @@ public class AccountMaster implements Serializable {
 	}
 
 	public String getFaxNumber() {
-		return faxNumber;
+		return this.faxNumber;
 	}
 
 	public void setFaxNumber(String faxNumber) {
@@ -146,55 +112,39 @@ public class AccountMaster implements Serializable {
 	}
 
 	public String getGstNumber() {
-		return gstNumber;
+		return this.gstNumber;
 	}
 
 	public void setGstNumber(String gstNumber) {
 		this.gstNumber = gstNumber;
 	}
 
-	public Boolean getIsActive() {
-		return isActive;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public String getMobileNumber() {
-		return mobileNumber;
+		return this.mobileNumber;
 	}
 
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 
-	public BigInteger getModifiedBy() {
-		return modifiedBy;
+	public Double getOpeningBalance() {
+		return this.openingBalance;
 	}
 
-	public void setModifiedBy(BigInteger modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
-
-	public BigDecimal getOpeningBalance() {
-		return openingBalance;
-	}
-
-	public void setOpeningBalance(BigDecimal openingBalance) {
+	public void setOpeningBalance(Double openingBalance) {
 		this.openingBalance = openingBalance;
 	}
 
 	public String getPanNumber() {
-		return panNumber;
+		return this.panNumber;
 	}
 
 	public void setPanNumber(String panNumber) {
@@ -202,12 +152,12 @@ public class AccountMaster implements Serializable {
 	}
 
 	public String getPhoneNumber() {
-		return phoneNumber;
+		return this.phoneNumber;
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
-	
+
 }

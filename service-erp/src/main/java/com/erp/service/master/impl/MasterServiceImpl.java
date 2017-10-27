@@ -21,27 +21,30 @@ import com.erp.domain.master.AddressMaster;
 import com.erp.domain.master.CategoryMaster;
 import com.erp.domain.master.CompanyMaster;
 import com.erp.domain.master.CustomerMaster;
+import com.erp.domain.master.ErpMstr;
 import com.erp.domain.master.ProductMaster;
 import com.erp.domain.master.RouteMaster;
-import com.erp.repository.master.AccountMasterRepository;
-import com.erp.repository.master.AddressMasterRepository;
-import com.erp.repository.master.CategoryMasterRepository;
-import com.erp.repository.master.CompanyMasterRepository;
-import com.erp.repository.master.CustomerMasterRepository;
-import com.erp.repository.master.ProductMasterRepository;
-import com.erp.repository.master.RouteMasterRepository;
+import com.erp.repository.common.ERPRepository;
+import com.erp.repository.master.AccountRepository;
+import com.erp.repository.master.AddressRepository;
+import com.erp.repository.master.CategoryRepository;
+import com.erp.repository.master.CompanyRepository;
+import com.erp.repository.master.CustomerRepository;
+import com.erp.repository.master.ProductRepository;
+import com.erp.repository.master.RouteRepository;
 import com.erp.service.master.MasterService;
 
-import model.AccountMasterRequest;
-import model.AddressMasterRequest;
-import model.CategoryMasterRequest;
-import model.CompanyMasterRequest;
-import model.CustomerMasterRequest;
-import model.ErpResponse;
-import model.MasterModel;
-import model.ProductMasterRequest;
-import model.RouteMasterRequest;
+import model.common.ErpResponse;
+import model.master.AccountRequest;
+import model.master.AddressRequest;
+import model.master.CategoryRequest;
+import model.master.CompanyRequest;
+import model.master.CustomerRequest;
+import model.master.MasterModel;
+import model.master.ProductRequest;
+import model.master.RouteRequest;
 import utils.CommonUtils;
+import utils.CommonUtils.Master;
 import utils.MultipleJSONObjectHelper;
 
 @Service
@@ -51,121 +54,121 @@ public class MasterServiceImpl implements MasterService {
 	private static Logger log = LoggerFactory.getLogger(MasterController.class);
 
 	@Autowired
-	private AccountMasterRepository accountMasterRepository;
+	private AccountRepository accountMasterRepository;
 
 	@Autowired
-	private AddressMasterRepository addressMasterRepository;
+	private ERPRepository erpMasterRepository;
 
 	@Autowired
-	private CategoryMasterRepository categoryMasterRepository;
+	private AddressRepository addressMasterRepository;
 
 	@Autowired
-	private CompanyMasterRepository companyMasterRepository;
+	private CategoryRepository categoryMasterRepository;
 
 	@Autowired
-	private CustomerMasterRepository customerMasterRepository;
+	private CompanyRepository companyMasterRepository;
 
 	@Autowired
-	private ProductMasterRepository productMasterRepository;
+	private CustomerRepository customerMasterRepository;
 
 	@Autowired
-	private RouteMasterRepository routeMasterRepository;
+	private ProductRepository productMasterRepository;
+
+	@Autowired
+	private RouteRepository routeMasterRepository;
 
 	@Override
 	public ErpResponse get(Long id, Integer classId) {
 		// TODO Auto-generated method stub
 
 		try {
-
-			switch (classId) {
-			case 1: {
+			Master masterType = CommonUtils.Master.getType(classId);
+			switch (masterType) {
+			case ACCOUNT_MASTER: {
 				// for get AccountMasterRequest Details
-				AccountMasterRequest accountMasterRequest = new AccountMasterRequest();
 				AccountMaster accountMaster = accountMasterRepository.findOne(id);
-				BeanUtils.copyProperties(accountMaster, accountMasterRequest);
-
-				ErpResponse res = new ErpResponse(CommonUtils.DATA_SUCCESSFULLY_FETCHED, HttpStatus.OK.value());
-				res.setData(accountMasterRequest);
-				return res;
-
+				if (!CommonUtils.isObjectNullOrEmpty(accountMaster)) {
+					AccountRequest accountMasterRequest = new AccountRequest();
+					BeanUtils.copyProperties(accountMaster, accountMasterRequest);
+					return new ErpResponse(CommonUtils.SUCCESS_MSG, HttpStatus.OK.value(), accountMasterRequest);
+				}
+				return new ErpResponse(CommonUtils.SUCCESS_MSG, HttpStatus.OK.value());
 			}
-			case 2: {
+			case ADDRERSS_MASTER: {
 				// for get AddressMasterRequest Details
-				AddressMasterRequest addressMasterRequest = new AddressMasterRequest();
+				ErpResponse erpResponse = new ErpResponse(CommonUtils.SUCCESS_MSG, HttpStatus.OK.value());
+				;
 				AddressMaster addressMaster = addressMasterRepository.findOne(id);
-				BeanUtils.copyProperties(addressMaster, addressMasterRequest);
-
-				ErpResponse res = new ErpResponse(CommonUtils.DATA_SUCCESSFULLY_FETCHED, HttpStatus.OK.value());
-				res.setData(addressMasterRequest);
-				return res;
-
+				if (!CommonUtils.isObjectNullOrEmpty(addressMaster)) {
+					AddressRequest addressMasterRequest = new AddressRequest();
+					BeanUtils.copyProperties(addressMaster, addressMasterRequest);
+					erpResponse.setData(addressMasterRequest);
+				}
+				return erpResponse;
 			}
-			case 3: {
+			case CATEGORY_MASTER: {
 				// for get CategoryMasterRequest Details
-				CategoryMasterRequest categoryMasterRequest = new CategoryMasterRequest();
 				CategoryMaster categoryMaster = categoryMasterRepository.findOne(id);
-				BeanUtils.copyProperties(categoryMaster, categoryMasterRequest);
-
-				ErpResponse res = new ErpResponse(CommonUtils.DATA_SUCCESSFULLY_FETCHED, HttpStatus.OK.value());
-				res.setData(categoryMasterRequest);
-				return res;
+				if (!CommonUtils.isObjectNullOrEmpty(categoryMaster)) {
+					CategoryRequest categoryMasterRequest = new CategoryRequest();
+					BeanUtils.copyProperties(categoryMaster, categoryMasterRequest);
+					return new ErpResponse(CommonUtils.SUCCESS_MSG, HttpStatus.OK.value(), categoryMasterRequest);
+				}
+				return new ErpResponse(CommonUtils.SUCCESS_MSG, HttpStatus.OK.value());
 
 			}
-			case 4: {
+			case COMPANY_MASTER: {
 				// for get CompanyMasterRequest Details
-				CompanyMasterRequest companyMasterRequest = new CompanyMasterRequest();
 				CompanyMaster companyMaster = companyMasterRepository.findOne(id);
-				BeanUtils.copyProperties(companyMaster, companyMasterRequest);
-
-				ErpResponse res = new ErpResponse(CommonUtils.DATA_SUCCESSFULLY_FETCHED, HttpStatus.OK.value());
-				res.setData(companyMasterRequest);
-				return res;
+				if (!CommonUtils.isObjectNullOrEmpty(companyMaster)) {
+					CompanyRequest companyMasterRequest = new CompanyRequest();
+					BeanUtils.copyProperties(companyMaster, companyMasterRequest);
+					ErpResponse res = new ErpResponse(CommonUtils.SUCCESS_MSG, HttpStatus.OK.value(),
+							companyMasterRequest);
+				}
+				return new ErpResponse(CommonUtils.SUCCESS_MSG, HttpStatus.OK.value());
 
 			}
-			case 5: {
+			case CUSTMER_MASTER: {
 				// for get CustomerMasterRequest Details
-				CustomerMasterRequest customerMasterRequest = new CustomerMasterRequest();
 				CustomerMaster customerMaster = customerMasterRepository.findOne(id);
-				BeanUtils.copyProperties(customerMaster, customerMasterRequest);
-
-				ErpResponse res = new ErpResponse(CommonUtils.DATA_SUCCESSFULLY_FETCHED, HttpStatus.OK.value());
-				res.setData(customerMasterRequest);
-				return res;
-
+				if (!CommonUtils.isObjectNullOrEmpty(customerMaster)) {
+					CustomerRequest customerMasterRequest = new CustomerRequest();
+					BeanUtils.copyProperties(customerMaster, customerMasterRequest);
+					return new ErpResponse(CommonUtils.SUCCESS_MSG, HttpStatus.OK.value(), customerMasterRequest);
+				}
+				return new ErpResponse(CommonUtils.SUCCESS_MSG, HttpStatus.OK.value());
 			}
-			case 6: {
+			case PRODUCT_MASTER: {
 				// for get ProductMasterRequest Details
-				ProductMasterRequest productMasterRequest = new ProductMasterRequest();
 				ProductMaster productMaster = productMasterRepository.findOne(id);
-				BeanUtils.copyProperties(productMaster, productMasterRequest);
-
-				ErpResponse res = new ErpResponse(CommonUtils.DATA_SUCCESSFULLY_FETCHED, HttpStatus.OK.value());
-				res.setData(productMasterRequest);
-				return res;
+				if (!CommonUtils.isObjectNullOrEmpty(productMaster)) {
+					ProductRequest productMasterRequest = new ProductRequest();
+					BeanUtils.copyProperties(productMaster, productMasterRequest);
+					return new ErpResponse(CommonUtils.SUCCESS_MSG, HttpStatus.OK.value(), productMasterRequest);
+				}
+				return new ErpResponse(CommonUtils.SUCCESS_MSG, HttpStatus.OK.value());
 
 			}
-			case 7: {
+			case ROUTE_MASTER: {
 				// for get RouteMasterRequest Details
-				RouteMasterRequest routeMasterRequest = new RouteMasterRequest();
 				RouteMaster routeMaster = routeMasterRepository.findOne(id);
-				BeanUtils.copyProperties(routeMaster, routeMasterRequest);
-
-				ErpResponse res = new ErpResponse(CommonUtils.DATA_SUCCESSFULLY_FETCHED, HttpStatus.OK.value());
-				res.setData(routeMaster);
-				return res;
-
+				if (!CommonUtils.isObjectNullOrEmpty(routeMaster)) {
+					RouteRequest routeMasterRequest = new RouteRequest();
+					BeanUtils.copyProperties(routeMaster, routeMasterRequest);
+					return new ErpResponse(CommonUtils.SUCCESS_MSG, HttpStatus.OK.value(), routeMasterRequest);
+				}
+				return new ErpResponse(CommonUtils.SUCCESS_MSG, HttpStatus.OK.value());
 			}
 			}
+			return null;
 
 		} catch (Exception e) {
-			// TODO: handle exception
-
-			e.printStackTrace();
 			log.error("error while fetching master detail");
+			e.printStackTrace();
 			return new ErpResponse("Error while fetching master detail", HttpStatus.INTERNAL_SERVER_ERROR.value());
 		}
 
-		return null;
 	}
 
 	@Override
@@ -175,9 +178,9 @@ public class MasterServiceImpl implements MasterService {
 		Pageable pageable = new PageRequest(pageNo, pageSize);
 		try {
 
-			switch (classId) {
-			case 1: {
-				List<AccountMasterRequest> listOfAccountMasterRequest = new ArrayList<AccountMasterRequest>();
+			Master masterType = CommonUtils.Master.getType(classId);
+			switch (masterType) {
+			case ACCOUNT_MASTER: {
 				List<AccountMaster> listOfAccountMaster = new ArrayList<AccountMaster>();
 				if (pageSize == -1 || pageNo == -1) {
 					listOfAccountMaster = accountMasterRepository.listAll();
@@ -185,144 +188,127 @@ public class MasterServiceImpl implements MasterService {
 
 					listOfAccountMaster = accountMasterRepository.listByRange(pageable);
 				}
-
+				List<AccountRequest> listOfAccountMasterRequest = new ArrayList<AccountRequest>(
+						listOfAccountMaster.size());
 				for (AccountMaster accountMaster : listOfAccountMaster) {
-					AccountMasterRequest accountMasterRequest = new AccountMasterRequest();
+					AccountRequest accountMasterRequest = new AccountRequest();
 					BeanUtils.copyProperties(accountMaster, accountMasterRequest);
 					listOfAccountMasterRequest.add(accountMasterRequest);
 				}
-
-				ErpResponse res = new ErpResponse(CommonUtils.LIST_SUCCESSFULLY_FETCHED, HttpStatus.OK.value());
-				res.setDataList(listOfAccountMasterRequest);
-				return res;
+				return new ErpResponse(CommonUtils.SUCCESS_MSG, HttpStatus.OK.value(), listOfAccountMasterRequest);
 			}
-			case 2: {
-				List<AddressMasterRequest> listOfAddressMasterRequest = new ArrayList<AddressMasterRequest>();
+			case ADDRERSS_MASTER: {
 				List<AddressMaster> listOfAddressMaster = new ArrayList<AddressMaster>();
 				if (pageSize == -1 || pageNo == -1) {
 					listOfAddressMaster = addressMasterRepository.listAll();
 				} else {
 					listOfAddressMaster = addressMasterRepository.listByRange(pageable);
 				}
-
+				List<AddressRequest> listOfAddressMasterRequest = new ArrayList<AddressRequest>(
+						listOfAddressMaster.size());
 				for (AddressMaster addressMaster : listOfAddressMaster) {
-					AddressMasterRequest addressMasterRequest = new AddressMasterRequest();
+					AddressRequest addressMasterRequest = new AddressRequest();
 					BeanUtils.copyProperties(addressMaster, addressMasterRequest);
 					listOfAddressMasterRequest.add(addressMasterRequest);
 				}
-
-				ErpResponse res = new ErpResponse(CommonUtils.LIST_SUCCESSFULLY_FETCHED, HttpStatus.OK.value());
-				res.setDataList(listOfAddressMasterRequest);
-				return res;
+				return new ErpResponse(CommonUtils.SUCCESS_MSG, HttpStatus.OK.value(), listOfAddressMasterRequest);
 			}
-			case 3: {
-				List<CategoryMasterRequest> listOfCategoryMasterRequest = new ArrayList<CategoryMasterRequest>();
+			case CATEGORY_MASTER: {
 				List<CategoryMaster> listOfCategoryMaster = new ArrayList<CategoryMaster>();
 				if (pageSize == -1 || pageNo == -1) {
 					listOfCategoryMaster = categoryMasterRepository.listAll();
 				} else {
 					listOfCategoryMaster = categoryMasterRepository.listByRange(pageable);
 				}
-
+				List<CategoryRequest> listOfCategoryMasterRequest = new ArrayList<CategoryRequest>(
+						listOfCategoryMaster.size());
 				for (CategoryMaster categoryMaster : listOfCategoryMaster) {
-					CategoryMasterRequest categoryMasterRequest = new CategoryMasterRequest();
+					CategoryRequest categoryMasterRequest = new CategoryRequest();
 					BeanUtils.copyProperties(categoryMaster, categoryMasterRequest);
 					listOfCategoryMasterRequest.add(categoryMasterRequest);
 				}
-
-				ErpResponse res = new ErpResponse(CommonUtils.LIST_SUCCESSFULLY_FETCHED, HttpStatus.OK.value());
-				res.setDataList(listOfCategoryMasterRequest);
-				return res;
+				return new ErpResponse(CommonUtils.SUCCESS_MSG, HttpStatus.OK.value(), listOfCategoryMasterRequest);
 			}
-			case 4: {
-				List<CompanyMasterRequest> listOfCompanyMasterRequest = new ArrayList<CompanyMasterRequest>();
+			case COMPANY_MASTER: {
 				List<CompanyMaster> listOfCompanyMaster = new ArrayList<CompanyMaster>();
 				if (pageSize == -1 || pageNo == -1) {
 					listOfCompanyMaster = companyMasterRepository.listAll();
 				} else {
 					listOfCompanyMaster = companyMasterRepository.listByRange(pageable);
 				}
-
+				List<CompanyRequest> listOfCompanyMasterRequest = new ArrayList<CompanyRequest>(
+						listOfCompanyMaster.size());
 				for (CompanyMaster companyMaster : listOfCompanyMaster) {
-					CompanyMasterRequest companyMasterRequest = new CompanyMasterRequest();
+					CompanyRequest companyMasterRequest = new CompanyRequest();
 					BeanUtils.copyProperties(companyMaster, companyMasterRequest);
 					listOfCompanyMasterRequest.add(companyMasterRequest);
 				}
-
-				ErpResponse res = new ErpResponse(CommonUtils.LIST_SUCCESSFULLY_FETCHED, HttpStatus.OK.value());
-				res.setDataList(listOfCompanyMasterRequest);
-				return res;
+				return new ErpResponse(CommonUtils.SUCCESS_MSG, HttpStatus.OK.value(), listOfCompanyMasterRequest);
 			}
 
-			case 5: {
-				List<CustomerMasterRequest> listOfCustomerMasterRequest = new ArrayList<CustomerMasterRequest>();
+			case CUSTMER_MASTER: {
 				List<CustomerMaster> listOfCustomerMaster = new ArrayList<CustomerMaster>();
 				if (pageSize == -1 || pageNo == -1) {
 					listOfCustomerMaster = customerMasterRepository.listAll();
 				} else {
 					listOfCustomerMaster = customerMasterRepository.listByRange(pageable);
 				}
-
+				List<CustomerRequest> listOfCustomerMasterRequest = new ArrayList<CustomerRequest>(
+						listOfCustomerMaster.size());
 				for (CustomerMaster customerMaster : listOfCustomerMaster) {
-					CustomerMasterRequest customerMasterRequest = new CustomerMasterRequest();
+					CustomerRequest customerMasterRequest = new CustomerRequest();
 					BeanUtils.copyProperties(customerMaster, customerMasterRequest);
 					listOfCustomerMasterRequest.add(customerMasterRequest);
 				}
-
-				ErpResponse res = new ErpResponse(CommonUtils.LIST_SUCCESSFULLY_FETCHED, HttpStatus.OK.value());
-				res.setDataList(listOfCustomerMasterRequest);
-				return res;
+				return new ErpResponse(CommonUtils.SUCCESS_MSG, HttpStatus.OK.value(), listOfCustomerMasterRequest);
 			}
 
-			case 6: {
-				List<ProductMasterRequest> listOfProductMasterRequest = new ArrayList<ProductMasterRequest>();
+			case PRODUCT_MASTER: {
 				List<ProductMaster> listOfProductMaster = new ArrayList<ProductMaster>();
 				if (pageSize == -1 || pageNo == -1) {
 					listOfProductMaster = productMasterRepository.listAll();
 				} else {
 					listOfProductMaster = productMasterRepository.listByRange(pageable);
 				}
-
+				List<ProductRequest> listOfProductMasterRequest = new ArrayList<ProductRequest>(
+						listOfProductMaster.size());
 				for (ProductMaster productMaster : listOfProductMaster) {
-					ProductMasterRequest productMasterRequest = new ProductMasterRequest();
+					ProductRequest productMasterRequest = new ProductRequest();
 					BeanUtils.copyProperties(productMaster, productMasterRequest);
 					listOfProductMasterRequest.add(productMasterRequest);
 				}
 
-				ErpResponse res = new ErpResponse(CommonUtils.LIST_SUCCESSFULLY_FETCHED, HttpStatus.OK.value());
-				res.setDataList(listOfProductMasterRequest);
-				return res;
+				return new ErpResponse(CommonUtils.SUCCESS_MSG, HttpStatus.OK.value(), listOfProductMasterRequest);
 			}
 
-			case 7: {
-				List<RouteMasterRequest> listOfRouteMasterRequest = new ArrayList<RouteMasterRequest>();
+			case ROUTE_MASTER: {
 				List<RouteMaster> listOfRouteMaster = new ArrayList<RouteMaster>();
 				if (pageSize == -1 || pageNo == -1) {
 					listOfRouteMaster = routeMasterRepository.listAll();
 				} else {
 					listOfRouteMaster = routeMasterRepository.listByRange(pageable);
 				}
-
+				List<RouteRequest> listOfRouteMasterRequest = new ArrayList<RouteRequest>(
+						listOfRouteMaster.size());
 				for (RouteMaster routeMaster : listOfRouteMaster) {
-					RouteMasterRequest routeMasterRequest = new RouteMasterRequest();
+					RouteRequest routeMasterRequest = new RouteRequest();
 					BeanUtils.copyProperties(routeMaster, routeMasterRequest);
 					listOfRouteMasterRequest.add(routeMasterRequest);
 				}
-
-				ErpResponse res = new ErpResponse(CommonUtils.LIST_SUCCESSFULLY_FETCHED, HttpStatus.OK.value());
-				res.setDataList(listOfRouteMasterRequest);
-				return res;
+				return new ErpResponse(CommonUtils.SUCCESS_MSG, HttpStatus.OK.value(), listOfRouteMasterRequest);
+			}
+			default: {
+				return new ErpResponse(CommonUtils.INVALID_REQUEST, HttpStatus.BAD_REQUEST.value());
 			}
 
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			e.printStackTrace();
 			log.error("error while fetching list of master detail");
+			e.printStackTrace();
 			return new ErpResponse("Error while fetching list of master detail",
 					HttpStatus.INTERNAL_SERVER_ERROR.value());
 		}
-		return null;
 	}
 
 	@Override
@@ -330,174 +316,179 @@ public class MasterServiceImpl implements MasterService {
 		// TODO Auto-generated method stub
 
 		try {
-
-			switch (classId) {
-			case 1: {
-				int count = accountMasterRepository.setInActive(id);
-				ErpResponse res = new ErpResponse(CommonUtils.DATA_SUCCESSFULLY_INACTIVATED, HttpStatus.OK.value());
-				return res;
-
+			int count = 0;
+			boolean isInvalid = false;
+			Master masterType = CommonUtils.Master.getType(classId);
+			switch (masterType) {
+			case ACCOUNT_MASTER: {
+				count = accountMasterRepository.setInActive(id);
+				break;
 			}
-			case 2: {
-				int count = addressMasterRepository.setInActive(id);
-				ErpResponse res = new ErpResponse(CommonUtils.DATA_SUCCESSFULLY_INACTIVATED, HttpStatus.OK.value());
-				return res;
-
+			case ADDRERSS_MASTER: {
+				count = addressMasterRepository.setInActive(id);
+				break;
 			}
-			case 3: {
-				int count = categoryMasterRepository.setInActive(id);
-				ErpResponse res = new ErpResponse(CommonUtils.DATA_SUCCESSFULLY_INACTIVATED, HttpStatus.OK.value());
-				return res;
-
+			case CATEGORY_MASTER: {
+				count = categoryMasterRepository.setInActive(id);
+				break;
 			}
-			case 4: {
-				int count = companyMasterRepository.setInActive(id);
-				ErpResponse res = new ErpResponse(CommonUtils.DATA_SUCCESSFULLY_INACTIVATED, HttpStatus.OK.value());
-				return res;
-
+			case COMPANY_MASTER: {
+				count = companyMasterRepository.setInActive(id);
+				break;
 			}
-			case 5: {
-				int count = customerMasterRepository.setInActive(id);
-				ErpResponse res = new ErpResponse(CommonUtils.DATA_SUCCESSFULLY_INACTIVATED, HttpStatus.OK.value());
-				return res;
-
+			case CUSTMER_MASTER: {
+				count = customerMasterRepository.setInActive(id);
+				break;
 			}
-			case 6: {
-				int count = productMasterRepository.setInActive(id);
-				ErpResponse res = new ErpResponse(CommonUtils.DATA_SUCCESSFULLY_INACTIVATED, HttpStatus.OK.value());
-				return res;
-
+			case PRODUCT_MASTER: {
+				count = productMasterRepository.setInActive(id);
+				break;
 			}
-			case 7: {
-				int count = routeMasterRepository.setInActive(id);
-				ErpResponse res = new ErpResponse(CommonUtils.DATA_SUCCESSFULLY_INACTIVATED, HttpStatus.OK.value());
-				return res;
-
+			case ROUTE_MASTER: {
+				count = routeMasterRepository.setInActive(id);
+				break;
+			}
+			default: {
+				isInvalid = true;
+				break;
 			}
 			}
-
+			return new ErpResponse(isInvalid ? CommonUtils.INVALID_REQUEST : CommonUtils.INACTIVATED,
+					isInvalid ? HttpStatus.BAD_REQUEST.value() : HttpStatus.OK.value(), count);
 		} catch (Exception e) {
 			// TODO: handle exception
-
-			e.printStackTrace();
 			log.error("error while set inactive master detail");
+			e.printStackTrace();
 			return new ErpResponse("Error while set inactive master detail", HttpStatus.INTERNAL_SERVER_ERROR.value());
 		}
-
-		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Boolean save(MasterModel request) {
-		// TODO Auto-generated method stub
-
+	public boolean save(MasterModel request, Long userId) throws Exception {
+		ErpMstr erpMaster = null;
 		try {
-
-			switch (request.getClassId()) {
-			case 1: {
-				AccountMasterRequest accountMasterRequest = new AccountMasterRequest();
-				accountMasterRequest = (AccountMasterRequest) MultipleJSONObjectHelper
-						.getObjectFromMap((Map<String, Object>) request.getMaster(), AccountMasterRequest.class);
-
-				AccountMaster accountMaster = new AccountMaster();
-				BeanUtils.copyProperties(accountMasterRequest, accountMaster);
-				accountMaster.setCreatedDate(new Date());
-				accountMaster.setModifiedDate(new Date());
-				accountMaster.setIsActive(true);
-
-				accountMasterRepository.save(accountMaster);
-				return true;
-
+			Master masterType = CommonUtils.Master.getType(request.getClassId());
+			switch (masterType) {
+			case ACCOUNT_MASTER: {
+				AccountRequest accountMasterRequest = (AccountRequest) MultipleJSONObjectHelper
+						.getObjectFromMap((Map<String, Object>) request.getMaster(), AccountRequest.class);
+				AccountMaster accountMaster = null;
+				if (CommonUtils.isObjectNullOrEmpty(accountMasterRequest.getErpId())) {
+					accountMaster = new AccountMaster();
+				} else {
+					accountMaster = accountMasterRepository.findOne(accountMasterRequest.getErpId());
+				}
+				BeanUtils.copyProperties(accountMasterRequest, accountMaster, CommonUtils.Ignore.ACTIVITY_KEYS);
+				accountMaster.setUserId(userId);
+				erpMaster = accountMaster;
+				break;
 			}
-			case 2: {
-				AddressMasterRequest addressMasterRequest = new AddressMasterRequest();
-				addressMasterRequest = (AddressMasterRequest) MultipleJSONObjectHelper
-						.getObjectFromMap((Map<String, Object>) request.getMaster(), AddressMasterRequest.class);
+			case ADDRERSS_MASTER: {
+				AddressRequest addressMasterRequest = (AddressRequest) MultipleJSONObjectHelper
+						.getObjectFromMap((Map<String, Object>) request.getMaster(), AddressRequest.class);
 
-				AddressMaster addressMaster = new AddressMaster();
-				BeanUtils.copyProperties(addressMasterRequest, addressMaster);
-				addressMaster.setCreatedDate(new Date());
-				addressMaster.setModifiedDate(new Date());
-				addressMaster.setIsActive(true);
-
-				addressMasterRepository.save(addressMaster);
-				return true;
+				AddressMaster addressMaster = null;
+				if (CommonUtils.isObjectNullOrEmpty(addressMasterRequest.getErpId())) {
+					addressMaster = new AddressMaster();
+				} else {
+					addressMaster = addressMasterRepository.findOne(addressMasterRequest.getErpId());
+				}
+				BeanUtils.copyProperties(addressMasterRequest, addressMaster, CommonUtils.Ignore.ACTIVITY_KEYS);
+				erpMaster = addressMaster;
+				break;
 			}
-			case 3: {
-				CategoryMasterRequest categoryMasterRequest = new CategoryMasterRequest();
-				categoryMasterRequest = (CategoryMasterRequest) MultipleJSONObjectHelper
-						.getObjectFromMap((Map<String, Object>) request.getMaster(), CategoryMasterRequest.class);
+			case CATEGORY_MASTER: {
+				CategoryRequest categoryMasterRequest = (CategoryRequest) MultipleJSONObjectHelper
+						.getObjectFromMap((Map<String, Object>) request.getMaster(), CategoryRequest.class);
 
-				CategoryMaster categoryMaster = new CategoryMaster();
-				BeanUtils.copyProperties(categoryMasterRequest, categoryMaster);
-				categoryMaster.setCreatedDate(new Date());
-				categoryMaster.setModifiedDate(new Date());
-				categoryMaster.setIsActive(true);
+				CategoryMaster categoryMaster = null;
+				if (CommonUtils.isObjectNullOrEmpty(categoryMasterRequest.getErpId())) {
+					categoryMaster = new CategoryMaster();
+				} else {
+					categoryMaster = categoryMasterRepository.findOne(categoryMasterRequest.getErpId());
+				}
 
-				categoryMasterRepository.save(categoryMaster);
-				return true;
+				BeanUtils.copyProperties(categoryMasterRequest, categoryMaster, CommonUtils.Ignore.ACTIVITY_KEYS);
+				erpMaster = categoryMaster;
+				break;
 			}
-			case 4: {
-				CompanyMasterRequest companyMasterRequest = new CompanyMasterRequest();
-				companyMasterRequest = (CompanyMasterRequest) MultipleJSONObjectHelper
-						.getObjectFromMap((Map<String, Object>) request.getMaster(), CompanyMasterRequest.class);
+			case COMPANY_MASTER: {
+				CompanyRequest companyMasterRequest = (CompanyRequest) MultipleJSONObjectHelper
+						.getObjectFromMap((Map<String, Object>) request.getMaster(), CompanyRequest.class);
 
-				CompanyMaster companyMaster = new CompanyMaster();
-				BeanUtils.copyProperties(companyMasterRequest, companyMaster);
-				companyMaster.setCreatedDate(new Date());
-				companyMaster.setModifiedDate(new Date());
-				companyMaster.setIsActive(true);
-
-				companyMasterRepository.save(companyMaster);
-				return true;
+				CompanyMaster companyMaster = null;
+				if (CommonUtils.isObjectNullOrEmpty(companyMasterRequest.getErpId())) {
+					companyMaster = new CompanyMaster();
+				} else {
+					companyMaster = companyMasterRepository.findOne(companyMasterRequest.getErpId());
+				}
+				BeanUtils.copyProperties(companyMasterRequest, companyMaster, CommonUtils.Ignore.ACTIVITY_KEYS);
+				erpMaster = companyMaster;
+				break;
 			}
-			case 5: {
-				CustomerMasterRequest customerMasterRequest = new CustomerMasterRequest();
-				customerMasterRequest = (CustomerMasterRequest) MultipleJSONObjectHelper
-						.getObjectFromMap((Map<String, Object>) request.getMaster(), CustomerMasterRequest.class);
+			case CUSTMER_MASTER: {
+				CustomerRequest customerMasterRequest = (CustomerRequest) MultipleJSONObjectHelper
+						.getObjectFromMap((Map<String, Object>) request.getMaster(), CustomerRequest.class);
 
-				CustomerMaster customerMaster = new CustomerMaster();
-				BeanUtils.copyProperties(customerMasterRequest, customerMaster);
-				customerMaster.setCreatedDate(new Date());
-				customerMaster.setModifiedDate(new Date());
-				customerMaster.setIsActive(true);
-
-				customerMasterRepository.save(customerMaster);
-				return true;
+				CustomerMaster customerMaster = null;
+				if (CommonUtils.isObjectNullOrEmpty(customerMasterRequest.getErpId())) {
+					customerMaster = new CustomerMaster();
+				} else {
+					customerMaster = customerMasterRepository.findOne(customerMasterRequest.getErpId());
+				}
+				BeanUtils.copyProperties(customerMasterRequest, customerMaster, CommonUtils.Ignore.ACTIVITY_KEYS);
+				erpMaster = customerMaster;
+				break;
 			}
-			case 6: {
-				ProductMasterRequest productMasterRequest = new ProductMasterRequest();
-				productMasterRequest = (ProductMasterRequest) MultipleJSONObjectHelper
-						.getObjectFromMap((Map<String, Object>) request.getMaster(), ProductMasterRequest.class);
+			case PRODUCT_MASTER: {
+				ProductRequest productMasterRequest = (ProductRequest) MultipleJSONObjectHelper
+						.getObjectFromMap((Map<String, Object>) request.getMaster(), ProductRequest.class);
 
-				ProductMaster productMaster= new ProductMaster();
-				BeanUtils.copyProperties(productMasterRequest, productMaster);
-				productMaster.setCreatedDate(new Date());
-				productMaster.setModifiedDate(new Date());
-				productMaster.setIsActive(true);
-
-				productMasterRepository.save(productMaster);
-				return true;
+				ProductMaster productMaster = null;
+				if (CommonUtils.isObjectNullOrEmpty(productMasterRequest.getErpId())) {
+					productMaster = new ProductMaster();
+				} else {
+					productMaster = productMasterRepository.findOne(productMasterRequest.getErpId());
+				}
+				BeanUtils.copyProperties(productMasterRequest, productMaster, CommonUtils.Ignore.ACTIVITY_KEYS);
+				erpMaster = productMaster;
+				break;
 			}
-			case 7: {
-				RouteMasterRequest routeMasterRequest = new RouteMasterRequest();
-				routeMasterRequest = (RouteMasterRequest) MultipleJSONObjectHelper
-						.getObjectFromMap((Map<String, Object>) request.getMaster(), RouteMasterRequest.class);
-
-				RouteMaster routeMaster= new RouteMaster();
-				BeanUtils.copyProperties(routeMasterRequest, routeMaster);
-				routeMaster.setCreatedDate(new Date());
-				routeMaster.setModifiedDate(new Date());
-				routeMaster.setIsActive(true);
-
-				routeMasterRepository.save(routeMaster);
-				return true;
+			case ROUTE_MASTER: {
+				RouteRequest routeMasterRequest = (RouteRequest) MultipleJSONObjectHelper
+						.getObjectFromMap((Map<String, Object>) request.getMaster(), RouteRequest.class);
+				RouteMaster routeMaster = null;
+				if (CommonUtils.isObjectNullOrEmpty(routeMasterRequest.getErpId())) {
+					routeMaster = new RouteMaster();
+				} else {
+					routeMaster = routeMasterRepository.findOne(routeMasterRequest.getErpId());
+				}
+				BeanUtils.copyProperties(routeMasterRequest, routeMaster, CommonUtils.Ignore.ACTIVITY_KEYS);
+				erpMaster = routeMaster;
+				break;
+			}
+			default: {
+				log.warn("Invalid ClassId==>" + request.getClassId());
+				return false;
 			}
 			}
 		} catch (Exception e) {
-			return false;
+			e.printStackTrace();
+			log.error("Error while Saving Master=>{0}", e);
+			throw new Exception(CommonUtils.SOMETHING_WENT_WRONG);
 		}
 
-		return null;
+		if (CommonUtils.isObjectNullOrEmpty(erpMaster.getErpId())) {
+			erpMaster.setCreatedDate(new Date());
+			erpMaster.setCreatedBy(userId);
+		} else {
+			erpMaster.setModifiedDate(new Date());
+			erpMaster.setModifiedBy(userId);
+		}
+		erpMaster.setIsActive(true);
+		erpMasterRepository.save(erpMaster);
+		log.info("SuccessFully Saved==>");
+		return true;
 	}
 }

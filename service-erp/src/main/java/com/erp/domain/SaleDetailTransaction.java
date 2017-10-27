@@ -1,61 +1,84 @@
 package com.erp.domain;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-
-import javax.persistence.*;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.erp.domain.master.ProductMaster;
 
 /**
  * The persistent class for the sale_detail_transaction database table.
  * 
  */
 @Entity
-@Table(name="sale_detail_transaction")
+@Table(name = "sale_detail_transaction")
+@NamedQuery(name = "SaleDetailTransaction.findAll", query = "SELECT s FROM SaleDetailTransaction s")
 public class SaleDetailTransaction implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name="created_by")
+	@Column(name = "created_by")
 	private Long createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_date")
+	@Column(name = "created_date")
 	private Date createdDate;
 
-	private BigDecimal discount;
+	private Double discount;
 
-	@Column(name="free_quantity")
+	@Column(name = "free_quantity")
 	private Long freeQuantity;
 
-	@Column(name="is_active")
+	@Column(name = "is_active")
 	private Boolean isActive;
-
-	@Column(name="modified_by")
-	private Long modifiedBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="modified_date")
-	private Date modifiedDate;
-
-	@Column(name="product_id")
-	private Long productId;
 
 	private Long quantity;
 
-	private BigDecimal rate;
-
-	@Column(name="sale_detail_id")
-	private Long saleDetailId;
+	private Double rate;
 
 	private Integer unit;
 
+	@Column(name = "updated_by")
+	private Long updatedBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "updated_date")
+	private Date updatedDate;
+
+	@JoinColumn(name = "org_id")
+	private Long organizationId;
+
+	@Column(name = "sale_detail_id")
+	private Long saleDetailId;
+
+	@Column(name = "user_id")
+	private Long userId;
+
+	// bi-directional many-to-one association to ProductMaster
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "product_id")
+	private ProductMaster productMaster;
+
+	public SaleDetailTransaction() {
+	}
+
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Long id) {
@@ -63,7 +86,7 @@ public class SaleDetailTransaction implements Serializable {
 	}
 
 	public Long getCreatedBy() {
-		return createdBy;
+		return this.createdBy;
 	}
 
 	public void setCreatedBy(Long createdBy) {
@@ -71,23 +94,23 @@ public class SaleDetailTransaction implements Serializable {
 	}
 
 	public Date getCreatedDate() {
-		return createdDate;
+		return this.createdDate;
 	}
 
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
-	public BigDecimal getDiscount() {
-		return discount;
+	public Double getDiscount() {
+		return this.discount;
 	}
 
-	public void setDiscount(BigDecimal discount) {
+	public void setDiscount(Double discount) {
 		this.discount = discount;
 	}
 
 	public Long getFreeQuantity() {
-		return freeQuantity;
+		return this.freeQuantity;
 	}
 
 	public void setFreeQuantity(Long freeQuantity) {
@@ -95,51 +118,67 @@ public class SaleDetailTransaction implements Serializable {
 	}
 
 	public Boolean getIsActive() {
-		return isActive;
+		return this.isActive;
 	}
 
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
 	}
 
-	public Long getModifiedBy() {
-		return modifiedBy;
-	}
-
-	public void setModifiedBy(Long modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
-
-	public Long getProductId() {
-		return productId;
-	}
-
-	public void setProductId(Long productId) {
-		this.productId = productId;
-	}
-
 	public Long getQuantity() {
-		return quantity;
+		return this.quantity;
 	}
 
 	public void setQuantity(Long quantity) {
 		this.quantity = quantity;
 	}
 
-	public BigDecimal getRate() {
-		return rate;
+	public Double getRate() {
+		return this.rate;
 	}
 
-	public void setRate(BigDecimal rate) {
+	public void setRate(Double rate) {
 		this.rate = rate;
+	}
+
+	public Integer getUnit() {
+		return this.unit;
+	}
+
+	public void setUnit(Integer unit) {
+		this.unit = unit;
+	}
+
+	public Long getUpdatedBy() {
+		return this.updatedBy;
+	}
+
+	public void setUpdatedBy(Long updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Date getUpdatedDate() {
+		return this.updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+	public ProductMaster getProductMaster() {
+		return this.productMaster;
+	}
+
+	public void setProductMaster(ProductMaster productMaster) {
+		this.productMaster = productMaster;
+	}
+
+	public Long getOrganizationId() {
+		return organizationId;
+	}
+
+	public void setOrganizationId(Long organizationId) {
+		this.organizationId = organizationId;
 	}
 
 	public Long getSaleDetailId() {
@@ -150,13 +189,12 @@ public class SaleDetailTransaction implements Serializable {
 		this.saleDetailId = saleDetailId;
 	}
 
-	public Integer getUnit() {
-		return unit;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setUnit(Integer unit) {
-		this.unit = unit;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
-	
 }

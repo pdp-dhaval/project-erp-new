@@ -1,65 +1,92 @@
 package com.erp.domain.master;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the address_master database table.
  * 
  */
 @Entity
-@Table(name="address_master")
-public class AddressMaster implements Serializable {
+@Table(name = "address_master")
+@NamedQuery(name = "AddressMaster.findAll", query = "SELECT a FROM AddressMaster a")
+@PrimaryKeyJoinColumn(referencedColumnName = "erp_id")
+public class AddressMaster extends ErpMstr implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private String id;
-
-	@Column(name="account_id")
-	private Long accountId;
 
 	private String address;
 
-	@Column(name="city_id")
+	@Column(name = "city_id")
 	private Long cityId;
 
-	@Column(name="country_id")
+	@Column(name = "country_id")
 	private Long countryId;
-
-	@Column(name="created_by")
-	private Long createdBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_date")
-	private Date createdDate;
-
-	@Column(name="is_active")
-	private Boolean isActive;
-
-	@Column(name="modified_by")
-	private Long modifiedBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="modified_date")
-	private Date modifiedDate;
 
 	private String pincode;
 
-	@Column(name="state_id")
+	@Column(name = "state_id")
 	private Long stateId;
 
+	@Column(name = "account_id")
+	private Long accountId;
+
+	@Column(name = "org_id")
+	private Long organizationIds;
+
+	@Column(name = "user_id")
+	private Long userId;
+
 	public AddressMaster() {
+		super();
+	}
+	
+	public AddressMaster(Long erpId) {
+		super(erpId);
 	}
 
-	public String getId() {
-		return id;
+	public String getAddress() {
+		return this.address;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Long getCityId() {
+		return this.cityId;
+	}
+
+	public void setCityId(Long cityId) {
+		this.cityId = cityId;
+	}
+
+	public Long getCountryId() {
+		return this.countryId;
+	}
+
+	public void setCountryId(Long countryId) {
+		this.countryId = countryId;
+	}
+
+	public String getPincode() {
+		return this.pincode;
+	}
+
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
+	}
+
+	public Long getStateId() {
+		return this.stateId;
+	}
+
+	public void setStateId(Long stateId) {
+		this.stateId = stateId;
 	}
 
 	public Long getAccountId() {
@@ -70,85 +97,20 @@ public class AddressMaster implements Serializable {
 		this.accountId = accountId;
 	}
 
-	public String getAddress() {
-		return address;
+	public Long getOrganizationIds() {
+		return organizationIds;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setOrganizationIds(Long organizationIds) {
+		this.organizationIds = organizationIds;
 	}
 
-	public Long getCityId() {
-		return cityId;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setCityId(Long cityId) {
-		this.cityId = cityId;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
-	public Long getCountryId() {
-		return countryId;
-	}
-
-	public void setCountryId(Long countryId) {
-		this.countryId = countryId;
-	}
-
-	public Long getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(Long createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public Boolean getIsActive() {
-		return isActive;
-	}
-
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
-	}
-
-	public Long getModifiedBy() {
-		return modifiedBy;
-	}
-
-	public void setModifiedBy(Long modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
-
-	public String getPincode() {
-		return pincode;
-	}
-
-	public void setPincode(String pincode) {
-		this.pincode = pincode;
-	}
-
-	public Long getStateId() {
-		return stateId;
-	}
-
-	public void setStateId(Long stateId) {
-		this.stateId = stateId;
-	}
-
-	
 }

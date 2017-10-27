@@ -1,98 +1,63 @@
 package com.erp.domain.master;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the route_master database table.
  * 
  */
 @Entity
-@Table(name="route_master")
-public class RouteMaster implements Serializable {
+@Table(name = "route_master")
+@NamedQuery(name = "RouteMaster.findAll", query = "SELECT r FROM RouteMaster r")
+@PrimaryKeyJoinColumn(referencedColumnName = "erp_id")
+public class RouteMaster extends ErpMstr implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
-
-	@Column(name="created_by")
-	private Long createdBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_date")
-	private Date createdDate;
-
-	@Column(name="is_active")
-	private Boolean isActive;
-
-	@Column(name="modified_by")
-	private Long modifiedBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="modified_date")
-	private Date modifiedDate;
-
-	@Column(name="route_name")
+	@Column(name = "route_name")
 	private String routeName;
 
-	public Long getId() {
-		return id;
+	@Column(name = "org_id")
+	private Long organizationId;
+
+	@Column(name = "user_id")
+	private Long userId;
+
+	public RouteMaster() {
+		super();
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Long getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(Long createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public Boolean getIsActive() {
-		return isActive;
-	}
-
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
-	}
-
-	public Long getModifiedBy() {
-		return modifiedBy;
-	}
-
-	public void setModifiedBy(Long modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
+	public RouteMaster(Long erpId) {
+		super(erpId);
 	}
 
 	public String getRouteName() {
-		return routeName;
+		return this.routeName;
 	}
 
 	public void setRouteName(String routeName) {
 		this.routeName = routeName;
 	}
 
-	
+	public Long getOrganizationId() {
+		return organizationId;
+	}
+
+	public void setOrganizationId(Long organizationId) {
+		this.organizationId = organizationId;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
 }

@@ -1,75 +1,192 @@
 package com.erp.domain;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-
-import javax.persistence.*;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the purchase_detail database table.
  * 
  */
 @Entity
-@Table(name="purchase_detail")
+@Table(name = "purchase_detail")
+@NamedQuery(name = "PurchaseDetail.findAll", query = "SELECT p FROM PurchaseDetail p")
 public class PurchaseDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name="account_id")
-	private Long accountId;
+	private Double adjustment;
 
-	private BigDecimal adjustment;
-
-	@Column(name="bill_number")
+	@Column(name = "bill_number")
 	private String billNumber;
 
-	@Column(name="created_by")
+	@Column(name = "created_by")
 	private Long createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_date")
+	@Column(name = "created_date")
 	private Date createdDate;
 
-	private BigDecimal discount;
+	private Double discount;
 
-	@Column(name="invoice_number")
+	@Column(name = "invoice_number")
 	private String invoiceNumber;
 
-	@Column(name="is_active")
+	@Column(name = "is_active")
 	private Boolean isActive;
 
-	@Column(name="modified_by")
-	private Long modifiedBy;
-
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="modified_date")
-	private Date modifiedDate;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="purchase_date")
+	@Column(name = "purchase_date")
 	private Date purchaseDate;
 
-	private BigDecimal rate;
+	private Double rate;
 
-	@Column(name="tax_id")
+	@Column(name = "tax_id")
 	private Integer taxId;
 
-	private BigDecimal total;
+	private Double total;
+
+	@Column(name = "updated_by")
+	private Long updatedBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "updated_date")
+	private Date updatedDate;
+
+	@Column(name = "account_id")
+	private Long accountId;
+
+	@Column(name = "org_id")
+	private Long organizationId;
+
+	@Column(name = "user_id")
+	private Long userId;
 
 	public PurchaseDetail() {
 	}
 
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Double getAdjustment() {
+		return this.adjustment;
+	}
+
+	public void setAdjustment(Double adjustment) {
+		this.adjustment = adjustment;
+	}
+
+	public String getBillNumber() {
+		return this.billNumber;
+	}
+
+	public void setBillNumber(String billNumber) {
+		this.billNumber = billNumber;
+	}
+
+	public Long getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(Long createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return this.createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Double getDiscount() {
+		return this.discount;
+	}
+
+	public void setDiscount(Double discount) {
+		this.discount = discount;
+	}
+
+	public String getInvoiceNumber() {
+		return this.invoiceNumber;
+	}
+
+	public void setInvoiceNumber(String invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
+	}
+
+	public Boolean getIsActive() {
+		return this.isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	public Date getPurchaseDate() {
+		return this.purchaseDate;
+	}
+
+	public void setPurchaseDate(Date purchaseDate) {
+		this.purchaseDate = purchaseDate;
+	}
+
+	public Double getRate() {
+		return this.rate;
+	}
+
+	public void setRate(Double rate) {
+		this.rate = rate;
+	}
+
+	public Integer getTaxId() {
+		return this.taxId;
+	}
+
+	public void setTaxId(Integer taxId) {
+		this.taxId = taxId;
+	}
+
+	public Double getTotal() {
+		return this.total;
+	}
+
+	public void setTotal(Double total) {
+		this.total = total;
+	}
+
+	public Long getUpdatedBy() {
+		return this.updatedBy;
+	}
+
+	public void setUpdatedBy(Long updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Date getUpdatedDate() {
+		return this.updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
 	}
 
 	public Long getAccountId() {
@@ -80,109 +197,19 @@ public class PurchaseDetail implements Serializable {
 		this.accountId = accountId;
 	}
 
-	public BigDecimal getAdjustment() {
-		return adjustment;
+	public Long getOrganizationId() {
+		return organizationId;
 	}
 
-	public void setAdjustment(BigDecimal adjustment) {
-		this.adjustment = adjustment;
+	public void setOrganizationId(Long organizationId) {
+		this.organizationId = organizationId;
 	}
 
-	public String getBillNumber() {
-		return billNumber;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setBillNumber(String billNumber) {
-		this.billNumber = billNumber;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
-
-	public Long getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(Long createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public BigDecimal getDiscount() {
-		return discount;
-	}
-
-	public void setDiscount(BigDecimal discount) {
-		this.discount = discount;
-	}
-
-	public String getInvoiceNumber() {
-		return invoiceNumber;
-	}
-
-	public void setInvoiceNumber(String invoiceNumber) {
-		this.invoiceNumber = invoiceNumber;
-	}
-
-	public Boolean getIsActive() {
-		return isActive;
-	}
-
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
-	}
-
-	public Long getModifiedBy() {
-		return modifiedBy;
-	}
-
-	public void setModifiedBy(Long modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
-
-	public Date getPurchaseDate() {
-		return purchaseDate;
-	}
-
-	public void setPurchaseDate(Date purchaseDate) {
-		this.purchaseDate = purchaseDate;
-	}
-
-	public BigDecimal getRate() {
-		return rate;
-	}
-
-	public void setRate(BigDecimal rate) {
-		this.rate = rate;
-	}
-
-	public Integer getTaxId() {
-		return taxId;
-	}
-
-	public void setTaxId(Integer taxId) {
-		this.taxId = taxId;
-	}
-
-	public BigDecimal getTotal() {
-		return total;
-	}
-
-	public void setTotal(BigDecimal total) {
-		this.total = total;
-	}
-
-	
 }

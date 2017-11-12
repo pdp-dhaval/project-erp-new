@@ -12,8 +12,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.util.Base64Utils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -81,6 +83,111 @@ public class LoginController {
 			e.printStackTrace();
 			return new ResponseEntity<AuthResponse>(new AuthResponse("Something went wrong",HttpStatus.INTERNAL_SERVER_ERROR.value()),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	
+	@RequestMapping(value = "/getAccessToken", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public AuthResponse getAccessToken(@RequestBody AuthRequest authRequest) {
+		logger.info("Enter in get accessToken");
+		String checkOauthTokenUrl = environment.getRequiredProperty(OAUTH_URL_KEY)
+				.concat(AuthUtils.OAUTH_TOKEN_URI);
+		String url = checkOauthTokenUrl
+				.concat("?grant_type=refresh_token&refresh_token=" + authRequest.getRefreshToken());
+		RestTemplate restTemplate = new RestTemplate();
+		try {
+			ResponseEntity<String> responseInString = restTemplate.exchange(url, HttpMethod.GET,
+					new HttpEntity<String>(createHeader(AuthUtils.CLIENT_ID, AuthUtils.CLIENT_SECRET)),
+					String.class);
+			AuthResponse response = responseAdapter(responseInString.getBody());
+			response.setUsername(authRequest.getUsername());
+			response.setLoginToken(authRequest.getLoginToken().toString());
+			userTokenMappingService.updateAccessToken(response);
+			logger.info("Successfully Generate Accesstoken---" + authRequest.getUsername());
+			return response;
+		} catch (Exception e) {
+			printLog("getAccessToken",authRequest);
+			logger.error("Throw Exception While Generate New Access Token");
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@RequestMapping(value = "/checkAccessToken", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public AuthResponse checkAccessToken(@RequestBody AuthRequest req) {
+		logger.info("Enter in check accessToken");
+		// first we check oauth check token using oauth/check_token
+		String oauthCheckToken = environment.getRequiredProperty(OAUTH_URL_KEY)
+				.concat(AuthUtils.OAUTH_CHECK_TOKEN_URI);
+		String url = oauthCheckToken.concat("?token=" + req.getAccessToken());
+		boolean isValid = validateAccessTokenWithOauth(req, url);
+		AuthResponse response = new AuthResponse();
+		if (isValid) {
+			response = userTokenMappingService.checkAccessToken(req);
+			if (response.getUserId() != null) {
+				response.setAuthenticate(true);
+			} else {
+				printLog("CheckAccessToken", req);
+				logger.warn("Check AccessToken on Every Request, Invalid Accesstoken or Refreshtoken or Logintoken");
+				response.setAuthenticate(false);
+			}
+			return response;
+		}
+		printLog("CheckAccessToken", req);
+		logger.warn("Check AccessToken on Every Request, AccessToken is Expire or Invalid");
+		response.setAuthenticate(false);
+		return response;
+	}
+	
+	@RequestMapping(value = "/logoutUser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public AuthResponse logoutUser(@RequestBody AuthRequest request) {
+		logger.info("Enter in logout user");
+		AuthResponse response = new AuthResponse();
+		response.setAuthenticate(false);
+		try {
+			if (!StringUtils.isEmpty(request.getAccessToken()) && !StringUtils.isEmpty(request.getUsername())) {
+				if(userTokenMappingService.isUserAlreadyActive(request.getUsername(), request.getRefreshToken())){
+					OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(request.getAccessToken());
+					if (oAuth2AccessToken != null) {
+						tokenStore.removeAccessToken(oAuth2AccessToken);
+					}
+				}
+				userTokenMappingService.logoutuser(request);
+				logger.info("Successfully logoutUser----" + request.getUsername() + "---LoginToken----" + request.getLoginToken());
+				response.setAuthenticate(true);
+			} else {
+				printLog("Logout User", request);
+				logger.warn("Logout User, Token and username not valid");
+				response.setMessage("Token and username is not valid");
+			}
+			return response;
+		} catch (Exception e) {
+			printLog("Logout User", request);
+			logger.error("Throw exception while logout user");
+			e.printStackTrace();
+			return response;
+		}
+	}
+	
+	
+	private boolean validateAccessTokenWithOauth(AuthRequest req, String url) {
+		try {
+			RestTemplate restTemplate = new RestTemplate();
+			restTemplate.exchange(url, HttpMethod.GET,
+					new HttpEntity<String>(createHeader(req.getClientId(), req.getClientSecret())), String.class);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	
+	private HttpHeaders createHeader(String clientId, String clientSecret) {
+		String authSecret = clientId + ":" + clientSecret;
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("authorization", "Basic " + Base64Utils.encodeToString(authSecret.getBytes()));
+		headers.set("cache-control", "no-cache");
+		return headers;
 	}
 	
 	private String printLog(String method,AuthRequest authRequest) {

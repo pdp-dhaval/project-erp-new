@@ -40,7 +40,7 @@ public class UserDetailsService implements org.springframework.security.core.use
         }
 
         //send user name and password to user security class for check valid or not
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), Collections.EMPTY_LIST);
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), Collections.emptyList());
 
     }
 

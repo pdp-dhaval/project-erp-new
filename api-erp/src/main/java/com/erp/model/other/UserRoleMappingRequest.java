@@ -1,11 +1,10 @@
-package model.other;
+package com.erp.model.other;
 
 import java.io.Serializable;
 import java.util.List;
 
+import com.erp.model.common.ERPRequest;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import model.common.ERPRequest;
 
 /**
  * The persistent class for the user_role_mapping database table.

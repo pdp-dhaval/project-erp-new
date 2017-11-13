@@ -2,6 +2,8 @@ package utils;
 
 import java.util.Collection;
 
+import com.erp.model.common.UserData;
+
 public class CommonUtils {
 
 	public static final Integer ACCOUNT_MASTER = 1;
@@ -10,6 +12,7 @@ public class CommonUtils {
 	public static final String SUCCESS_MSG = "Success";
 	public static final String INACTIVATED = "Successfully InActivated";
 	public static final String INVALID_REQUEST = "Invalid Request";
+	public static final String USER_DATA = "UD";
 
 	public interface PersistanceContext {
 		public static final String ERP_TM = "erpDataStoreTM";
@@ -31,7 +34,11 @@ public class CommonUtils {
 
 	public interface Ignore {
 		public static final String[] ACTIVITY_KEYS = { "createdBy", "orgId", "createdDate", "modifiedBy",
-				"modifiedDate" };
+				"modifiedDate", "organizationId" };
+	}
+
+	public static Long getMainUserId(UserData data) {
+		return isObjectNullOrEmpty(data.getParentId()) ? data.getUserId() : data.getParentId();
 	}
 
 	public enum Master {
@@ -52,9 +59,9 @@ public class CommonUtils {
 			case 1:
 				return ACCOUNT_MASTER;
 			case 2:
-				return Master.ADDRERSS_MASTER;
+				return ADDRERSS_MASTER;
 			case 3:
-				return Master.CATEGORY_MASTER;
+				return CATEGORY_MASTER;
 			case 4:
 				return COMPANY_MASTER;
 			case 5:

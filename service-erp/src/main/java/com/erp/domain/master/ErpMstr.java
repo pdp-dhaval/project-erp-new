@@ -49,6 +49,8 @@ public class ErpMstr implements Serializable {
 	private Date modifiedDate;
 
 	public ErpMstr() {
+		this.createdDate = new Date();
+		this.isActive = true;
 	}
 
 	public ErpMstr(Long erpId) {

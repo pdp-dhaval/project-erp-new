@@ -15,6 +15,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "account_master")
 @NamedQuery(name = "AccountMaster.findAll", query = "SELECT a FROM AccountMaster a")
+// @Inheritance(strategy = InheritanceType.JOINED)
 @PrimaryKeyJoinColumn(referencedColumnName = "erp_id")
 public class AccountMaster extends ErpMstr implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -58,7 +59,7 @@ public class AccountMaster extends ErpMstr implements Serializable {
 	public AccountMaster() {
 		super();
 	}
-	
+
 	public AccountMaster(Long erpId) {
 		super(erpId);
 	}
@@ -158,6 +159,5 @@ public class AccountMaster extends ErpMstr implements Serializable {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-
 
 }

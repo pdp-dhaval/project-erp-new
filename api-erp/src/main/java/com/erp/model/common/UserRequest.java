@@ -1,4 +1,4 @@
-package model.common;
+package com.erp. model.common;
 
 import java.io.Serializable;
 

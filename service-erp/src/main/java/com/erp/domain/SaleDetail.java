@@ -74,8 +74,8 @@ public class SaleDetail implements Serializable {
 	@Column(name = "org_id")
 	private Long organizationId;
 
-	@Column(name = "account_id")
-	private Long accountId;
+	@Column(name = "customer_id")
+	private Long customerId;
 
 	public SaleDetail() {
 	}
@@ -216,12 +216,11 @@ public class SaleDetail implements Serializable {
 		this.organizationId = organizationId;
 	}
 
-	public Long getAccountId() {
-		return accountId;
+	public Long getCustomerId() {
+		return customerId;
 	}
 
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
 	}
-	
 }

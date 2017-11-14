@@ -65,8 +65,8 @@ public class PurchaseDetail implements Serializable {
 	@Column(name = "updated_date")
 	private Date updatedDate;
 
-	@Column(name = "account_id")
-	private Long accountId;
+	@Column(name = "company_id")
+	private Long companyId;
 
 	@Column(name = "org_id")
 	private Long organizationId;
@@ -189,12 +189,12 @@ public class PurchaseDetail implements Serializable {
 		this.updatedDate = updatedDate;
 	}
 
-	public Long getAccountId() {
-		return accountId;
+	public Long getCompanyId() {
+		return companyId;
 	}
 
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
 	}
 
 	public Long getOrganizationId() {

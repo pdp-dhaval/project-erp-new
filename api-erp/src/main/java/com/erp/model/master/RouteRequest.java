@@ -1,10 +1,9 @@
-package model.master;
+package com.erp.model.master;
 
 import java.io.Serializable;
 
+import com.erp.model.common.ERPRequest;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import model.common.ERPRequest;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RouteRequest extends ERPRequest implements Serializable {

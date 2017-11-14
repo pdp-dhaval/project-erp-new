@@ -1,7 +1,8 @@
-package model.master;
+package com.erp.model.master;
 
 import java.io.Serializable;
 
+import com.erp.model.common.UserData;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -10,17 +11,19 @@ public class MasterRequest implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-	
-	private Integer classId; // 
-	
+
+	private Integer classId; //
+
 	private Integer pageSize; // is startNo -1 and endNo is -1 then get all list
-	
+
 	private Integer pageNo; // is startNo -1 and endNo is -1 then get all list
+
+	private UserData userData;
 
 	public MasterRequest() {
 		super();
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -53,6 +56,12 @@ public class MasterRequest implements Serializable {
 		this.pageNo = pageNo;
 	}
 
-		
-	
+	public UserData getUserData() {
+		return userData;
+	}
+
+	public void setUserData(UserData userData) {
+		this.userData = userData;
+	}
+
 }

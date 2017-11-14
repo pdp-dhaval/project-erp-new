@@ -1,4 +1,4 @@
-package model.common;
+package com.erp.model.common;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -18,20 +18,20 @@ public class ErpResponse implements Serializable {
 	private String message;
 
 	private Object data;
-	
-	private List<?> dataList = Collections.emptyList();
+
+	// private List<?> dataList = Collections.emptyList();
 
 	public ErpResponse() {
 		super();
 	}
 
-	public ErpResponse(String message,Integer status) {
+	public ErpResponse(String message, Integer status) {
 		super();
 		this.message = message;
 		this.status = status;
 	}
-	
-	public ErpResponse(String message,Integer status,Object data) {
+
+	public ErpResponse(String message, Integer status, Object data) {
 		super();
 		this.message = message;
 		this.status = status;
@@ -70,12 +70,12 @@ public class ErpResponse implements Serializable {
 		this.data = data;
 	}
 
-	public List<?> getDataList() {
-		return dataList;
-	}
+	// public List<?> getDataList() {
+	// return dataList;
+	// }
+	//
+	// public void setDataList(List<?> dataList) {
+	// this.dataList = dataList;
+	// }
 
-	public void setDataList(List<?> dataList) {
-		this.dataList = dataList;
-	}
-	
 }

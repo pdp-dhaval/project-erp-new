@@ -13,12 +13,27 @@ import com.erp.domain.master.RouteMaster;
 public interface RouteRepository extends JpaRepository<RouteMaster, Long> {
 
 	@Modifying
-	@Query("update RouteMaster am set am.isActive = false,am.modifiedDate = NOW() where am.id =:id")
-	public int setInActive(@Param("id") Long id);
+	@Query("update RouteMaster accm set accm.isActive = false,accm.modifiedDate = NOW() where accm.erpId =:id and accm.isActive = true")
+	public int inActivate(@Param("id") Long id);
 
-	@Query("from RouteMaster am where am.isActive = true")
-	List<RouteMaster> listAll();
+	@Query("from RouteMaster accm")
+	public List<RouteMaster> getAll();
 
-	@Query("from RouteMaster am where am.isActive = true")
+	@Query("from RouteMaster accm where accm.userId =:userId and accm.isActive =:isActive")
+	public List<RouteMaster> getAll(@Param("isActive") Boolean isActive);
+
+	@Query("from RouteMaster accm where accm.userId =:userId and accm.isActive = true")
+	public List<RouteMaster> getAll(@Param("userId") Long userId);
+
+	@Query("from RouteMaster accm where accm.isActive =:isActive")
+	public List<RouteMaster> getAllByStaus(@Param("isActive") Boolean isActive);
+
+	@Query("select accm from RouteMaster accm where accm.isActive =:isActive and accm.erpId =:id")
+	public RouteMaster getById(@Param("id") Long erpId, @Param("isActive") Boolean isActive);
+
+	@Query("from RouteMaster accm")
 	public List<RouteMaster> listByRange(Pageable pageable);
+
+	@Query("from RouteMaster accm where accm.isActive =:isActive")
+	public List<RouteMaster> listByRangeAndStatus(Pageable pageable, @Param("isActive") Boolean isActive);
 }

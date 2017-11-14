@@ -1,10 +1,9 @@
-package model.master;
+package com.erp.model.master;
 
 import java.io.Serializable;
 
+import com.erp.model.common.ERPRequest;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import model.common.ERPRequest;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CategoryRequest extends ERPRequest implements Serializable {
@@ -13,7 +12,7 @@ public class CategoryRequest extends ERPRequest implements Serializable {
 
 	private String categoryName;
 
-	private Long orgId;
+	private Long organizationId;
 
 	public CategoryRequest() {
 		super();
@@ -31,12 +30,12 @@ public class CategoryRequest extends ERPRequest implements Serializable {
 		this.categoryName = categoryName;
 	}
 
-	public Long getOrgId() {
-		return orgId;
+	public Long getOrganizationId() {
+		return organizationId;
 	}
 
-	public void setOrgId(Long orgId) {
-		this.orgId = orgId;
+	public void setOrganizationId(Long organizationId) {
+		this.organizationId = organizationId;
 	}
 
 	@Override

@@ -1,10 +1,10 @@
-package model.master;
+package com.erp.model.master;
 
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import model.common.ERPRequest;
+import com.erp.model.common.ERPRequest;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AccountRequest extends ERPRequest implements Serializable {
@@ -36,11 +36,11 @@ public class AccountRequest extends ERPRequest implements Serializable {
 	public AccountRequest() {
 		super();
 	}
-	
+
 	public AccountRequest(Long id) {
 		super(id);
 	}
-	
+
 	public String getAccountName() {
 		return accountName;
 	}

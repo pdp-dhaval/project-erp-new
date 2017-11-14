@@ -1,4 +1,4 @@
-package model.other;
+package com.erp.model.other;
 
 import java.io.Serializable;
 import java.util.List;

@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Table(name = "company_master")
 @NamedQuery(name = "CompanyMaster.findAll", query = "SELECT c FROM CompanyMaster c")
 @PrimaryKeyJoinColumn(referencedColumnName = "erp_id")
-public class CompanyMaster extends ErpMstr implements Serializable {
+public class CompanyMaster extends AccountMaster implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "company_code")
@@ -24,9 +24,6 @@ public class CompanyMaster extends ErpMstr implements Serializable {
 
 	@Column(name = "company_name")
 	private String companyName;
-
-	@Column(name = "account_id")
-	private Long accountId;
 
 	@Column(name = "org_id")
 	private Long organizationId;
@@ -52,14 +49,6 @@ public class CompanyMaster extends ErpMstr implements Serializable {
 
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
-	}
-
-	public Long getAccountId() {
-		return accountId;
-	}
-
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
 	}
 
 	public Long getOrganizationId() {

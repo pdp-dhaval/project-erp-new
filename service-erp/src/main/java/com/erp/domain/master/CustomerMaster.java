@@ -19,15 +19,11 @@ import javax.persistence.Table;
 @Table(name = "customer_master")
 @NamedQuery(name = "CustomerMaster.findAll", query = "SELECT c FROM CustomerMaster c")
 @PrimaryKeyJoinColumn(referencedColumnName = "erp_id")
-public class CustomerMaster extends ErpMstr implements Serializable {
+public class CustomerMaster extends AccountMaster implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "customer_type")
 	private Integer customerType;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "account_id")
-	private AccountMaster accountMaster;
 
 	@Column(name = "org_id")
 	private Long organizationId;
@@ -52,14 +48,6 @@ public class CustomerMaster extends ErpMstr implements Serializable {
 		this.customerType = customerType;
 	}
 
-	public AccountMaster getAccountMaster() {
-		return this.accountMaster;
-	}
-
-	public void setAccountMaster(AccountMaster accountMaster) {
-		this.accountMaster = accountMaster;
-	}
-	
 	public RouteMaster getRouteMaster() {
 		return this.routeMaster;
 	}

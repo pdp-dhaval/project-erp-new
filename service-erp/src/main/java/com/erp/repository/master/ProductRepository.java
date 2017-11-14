@@ -10,15 +10,31 @@ import org.springframework.data.repository.query.Param;
 
 import com.erp.domain.master.ProductMaster;
 
-public interface ProductRepository extends JpaRepository<ProductMaster, Long>{
+public interface ProductRepository extends JpaRepository<ProductMaster, Long> {
 
 	@Modifying
-	@Query("update ProductMaster am set am.isActive = false,am.modifiedDate = NOW() where am.id =:id")
-	public int setInActive(@Param("id") Long id);
-	
-	@Query( "from AccountMaster am where isActive=true" )
-	List<ProductMaster> listAll();
-	
-	@Query( "from ProductMaster am where isActive=true" )
-	public List<ProductMaster> listByRange(Pageable pageable);
+	@Query("update ProductMaster accm set accm.isActive = false,accm.modifiedDate = NOW() where accm.erpId =:id and accm.isActive = true")
+	public int inActivate(@Param("id") Long id);
+
+	@Query("from ProductMaster accm")
+	public List<ProductMaster> getAll();
+
+	@Query("from ProductMaster accm where accm.organizationId =:organizationId and accm.isActive =:isActive")
+	public List<ProductMaster> getAll(@Param("isActive") Boolean isActive);
+
+	@Query("from ProductMaster accm where accm.organizationId =:organizationId")
+	public List<ProductMaster> getAll(@Param("organizationId") Long organizationId);
+
+	@Query("from ProductMaster accm where accm.isActive =:isActive")
+	public List<ProductMaster> getAllByStaus(@Param("isActive") Boolean isActive);
+
+	@Query("select accm from ProductMaster accm where accm.isActive =:isActive and accm.erpId =:id")
+	public ProductMaster getById(@Param("id") Long erpId, @Param("isActive") Boolean isActive);
+
+	@Query("from ProductMaster accm where accm.organizationId =:organizationId")
+	public List<ProductMaster> listByRange(Pageable pageable, @Param("organizationId") Long organizationId);
+
+	@Query("from ProductMaster accm where accm.isActive =:isActive and accm.organizationId =:organizationId")
+	public List<ProductMaster> listByRangeAndStatus(Pageable pageable, @Param("isActive") Boolean isActive,
+			@Param("organizationId") Long organizationId);
 }

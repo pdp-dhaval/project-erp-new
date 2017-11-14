@@ -20,6 +20,8 @@ public class AuthResponse implements Serializable{
 	private String email;
 	private String loginToken;
 	private String username;
+	private Long userId;
+	private Boolean authenticate;
 	
 	public AuthResponse(){}
 	
@@ -98,6 +100,24 @@ public class AuthResponse implements Serializable{
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	
+	
+
+	public Boolean getAuthenticate() {
+		return authenticate;
+	}
+
+	public void setAuthenticate(Boolean authenticate) {
+		this.authenticate = authenticate;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	@Override

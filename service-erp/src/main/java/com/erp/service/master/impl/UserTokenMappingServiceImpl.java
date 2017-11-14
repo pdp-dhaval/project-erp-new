@@ -2,6 +2,7 @@ package com.erp.service.master.impl;
 
 
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,35 @@ public class UserTokenMappingServiceImpl implements UserTokenMappingService{
 		response.setLoginToken(userTokenMapping.getLoginToken().toString());
 		response.setUsername(authRequest.getUsername());
 		return response;
+	}
+	
+	@Override
+	public void updateAccessToken(AuthResponse response) {
+		userTokenMappingRepository.updateAccessToken(response.getUsername(), response.getRefresh_token(), response.getAccess_token(), response.getExpires_in(), Integer.valueOf(response.getLoginToken()));
+	}
+	
+	@Override
+	public AuthResponse checkAccessToken(AuthRequest authRequest) {
+		List<UserTokenMapping> userTokenMapping = userTokenMappingRepository.checkAccessToken(authRequest.getUsername(), authRequest.getAccessToken(),authRequest.getLoginToken());
+		AuthResponse response = new AuthResponse();
+		if(userTokenMapping.isEmpty() || userTokenMapping == null) {
+			return response;
+		} else {
+			response.setUserId(userTokenMapping.get(0).getUserId());
+			response.setUserType(userTokenMapping.get(0).getUserType());
+			return response;
+		}
+	}
+	
+	@Override
+	public void logoutuser(AuthRequest req){
+		userTokenMappingRepository.logoutUser(req.getUsername(),req.getRefreshToken(),req.getLoginToken());
+	}
+	
+	@Override
+	public boolean isUserAlreadyActive(String userName,String refreshToken){
+		Long count = userTokenMappingRepository.isUserAlreadyActive(userName, refreshToken);
+		return count > 0;
 	}
 	
 	private Integer getRandomNumber() {
